@@ -1,0 +1,28 @@
+{% if messages %}
+<div class="mx-auto message-container message_float ">
+  {% for message in messages %}
+  {% with message.level as tags %}
+
+  {% if  tags == 40 %}
+  <!--IT IS FOR ERROR MESSAGE -->
+  {% include 'includes/toasts/message_Error.html' %}
+
+  {% elif tags == 20 %}
+  <!--IT IS FOR INFO MESSAGE -->
+  {% include 'includes/toasts/message_info.html' %}
+
+  {% elif tags == 25 %}
+  <!--IT IS FOR SUCCESS MESSAGE -->
+  {% include 'includes/toasts/message_Success.html' %}
+
+  {% elif tags == 30 %}
+  <!--IT IS FOR WARNING MESSAGE -->
+  {% include 'includes/toasts/message_Warning.html' %}
+  {% else %}
+  <!--IT IS FOR OTHER MESSAGE -->
+
+  {% endif %}
+  {% endwith %}
+  {% endfor %}
+</div>
+{% endif %}
