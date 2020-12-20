@@ -39,8 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # nuevas aplicaciones
+    # mis aplicaciones
     'vias',
+    # librerias externas 
+    'crispy_forms',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
@@ -126,6 +128,7 @@ USE_TZ = True
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Add to test email:
 
@@ -143,4 +146,7 @@ MENU_URL = '/accounts/menu/'
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'jansviral/static'),)
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 

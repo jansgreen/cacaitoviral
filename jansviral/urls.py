@@ -20,6 +20,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),
     path('accounts/', include('allauth.urls')),
+    path('via', views.agregar_via, name='agregar_via'),
+
 
 
 
