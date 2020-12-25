@@ -1,3 +1,5 @@
+
+
 .cabezera-link-principal{
     font-family: 'Dancing Script', cursive;
 
@@ -51,4 +53,12 @@
 
   footer{
       background-color: #0098f0;
+  }
+
+  .toast{
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1; 
   }

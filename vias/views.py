@@ -21,7 +21,6 @@ def agregar_via(request):
     esta funcion es para agregar las vias; solo puede agregar una por una
     """
     user = User.objects.get()
-    print(request.user.id)
     if request.method == 'POST':
         form = ViasForm(request.POST, files=request.FILES, initial={'user': request.user.id})
         if form.is_valid():
@@ -32,7 +31,7 @@ def agregar_via(request):
             return HttpResponseRedirect(reverse('agregar_via'))
 
         else:
-            print("aqui hay un error")
+            messages.error(request, 'ocurrio un error, esto no pudo haber pasado contacta al administrador.')
     else:
         form = ViasForm()
     template = 'index/agregar_via.html'

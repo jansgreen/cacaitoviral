@@ -1,19 +1,32 @@
-
 {% if messages %}
-<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-  <div class="toast-header">
-    <img src="..." class="rounded me-2" alt="...">
-    <strong class="me-auto">Felicidades</strong>
-    <small>11 mins ago</small>
-    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-  </div>
-  <div class="toast-body">
-    {% for message in messages %}
-    {{ message }}    
-    {% endfor %}
-  </div>
+<div class="toast mx-auto" data-autohide="false">
+
+{% for message in messages %}
+
+{% if message.tags == 'success' %}
+<!--MENSAJE EXITOSO-->
+{% include 'includes/toasts/message_success.html' %}
+{% endif %}
+
+<!--MENSAJE ERROR-->
+{% if message.tags == 'error' %}
+{% include 'includes/toasts/message_error.html' %}
+{% endif %}
+
+<!--MENSAJE ADVERTENCIA-->
+{% if message.tags == 'warning' %}
+{% include 'includes/toasts/message_warning.html' %}
+{% endif %}
+
+<!--MENSAJE INFORMACION-->
+{% if message.tags == 'info' %}
+{% include 'includes/toasts/message_info.html' %}
+{% endif %}
+
+<!--MENSAJE DEPURAR-->
+{% if message.tags == 'debug' %}
+{% include 'includes/toasts/message_debug.html' %}
+{% endif %}
+ {% endfor %}
 </div>
-
-
-
 {% endif %}
