@@ -1,5 +1,4 @@
 import os
-
 """
 Django settings for jansviral project.
 
@@ -83,6 +82,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'jansviral.wsgi.application'
 
 
+
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
@@ -150,3 +150,4 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'jansviral/static'),)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')

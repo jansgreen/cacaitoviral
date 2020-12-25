@@ -5,11 +5,7 @@ import datetime
 
 # Create your models here.
 
-def nombre_imagen(instance, filename):
-    user = User.objects.get()
-    return 'user_{0}/{1}'.format(instance.user, filename)
-
-class Tipos(models.Model):
+class Tipo(models.Model):
     """
     Tipos de vias disponible, una varias vias pueden perteneser solamente a un tipo
     """
@@ -28,9 +24,9 @@ class Vias(models.Model):
 
     nombre_via = models.CharField(max_length=20, null=True, editable=True)
     link = models.CharField(max_length=100, null=True, editable=True)
-    tipo = models.ForeignKey(Tipos, on_delete=models.CASCADE)
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    imagen = models.ImageField(upload_to=nombre_imagen, null=True)
+    tipo = models.ForeignKey(Tipo, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    imagen =  models.ImageField(upload_to="ImagenVia", null=True)
     fecha = models.DateField(default=datetime.date.today)
 
     

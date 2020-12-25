@@ -18,7 +18,7 @@ from django.urls import path, include
 from vias import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index),
+    path('', views.index, name='index'),
     path('accounts/', include('allauth.urls')),
     path('via', views.agregar_via, name='agregar_via'),
 

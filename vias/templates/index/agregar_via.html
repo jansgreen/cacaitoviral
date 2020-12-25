@@ -5,16 +5,13 @@
 {% block content %}
 <form action="{% url 'agregar_via' %}" method="POST" id="agregar_via" enctype="multipart/form-data">
     {% csrf_token %}
+    {{form.errors}}
     <h3>Crea tu via</h3>
     <h6>Nombre del la Via :</h6> {{ form.nombre_via |as_crispy_field }}
     <h6>Link de la via :</h6>{{ form.link |as_crispy_field }}
     <h6>Imagen de la via :</h6>{{ form.imagen |as_crispy_field }}
     <h6>Tipo de via :</h6>{{ form.tipo |as_crispy_field }}
     <h6>Fecha :</h6>{{ form.fecha |as_crispy_field }}
-    <div class="input-group mb-3">
-        <input type="text" class="form-control hidden" placeholder="Recipient's username" style="display:none" aria-label="Recipient's username" aria-describedby="basic-addon2" value="{{user}}">
-    </div>
-
 
     <button type="submit" class="btn btn-primary">Guardar</button>
 </form>

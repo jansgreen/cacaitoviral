@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, reverse
 from .forms import TiposForm, ViasForm
+from .models import Vias
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.http import HttpResponseRedirect
 
 
 
@@ -10,6 +12,7 @@ def index(request):
     """
     muestra la pagina princiapl
     """
+
     return render(request, 'index/index.html')
 
 
@@ -17,14 +20,19 @@ def agregar_via(request):
     """
     esta funcion es para agregar las vias; solo puede agregar una por una
     """
+    user = User.objects.get()
+    print(request.user.id)
     if request.method == 'POST':
-        form = ViasForm(request.POST, request.FILES)
-        print(form)
+        form = ViasForm(request.POST, files=request.FILES, initial={'user': request.user.id})
         if form.is_valid():
+            form_user = form.save(commit=False)
+            form_user.usuario = request.user  # The logged-in user
             form.save()
-            messages.success(request, 'Profile update successfully')
+            messages.success(request, 'Su via ha sido guardada exitosamente.')
+            return HttpResponseRedirect(reverse('agregar_via'))
+
         else:
-            messages.error (request, 'Update failed. Please ensure the form is valid.')
+            print("aqui hay un error")
     else:
         form = ViasForm()
     template = 'index/agregar_via.html'
@@ -33,3 +41,4 @@ def agregar_via(request):
 
     }
     return render(request, template, context)
+

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Vias, Tipos
+from .models import Vias, Tipo
 
 # Register your models here.
 
@@ -36,4 +36,4 @@ class TiposAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Vias, ViasAdmin)
-admin.site.register(Tipos, TiposAdmin)
+admin.site.register(Tipo, TiposAdmin)
