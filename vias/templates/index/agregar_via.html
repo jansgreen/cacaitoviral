@@ -4,15 +4,26 @@
 
 {% block content %}
 <form action="{% url 'agregar_via' %}" method="POST" id="agregar_via" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{form.errors}}
-    <h3>Crea tu via</h3>
-    <h6>Nombre del la Via :</h6> {{ form.nombre_via |as_crispy_field }}
-    <h6>Link de la via :</h6>{{ form.link |as_crispy_field }}
-    <h6>Imagen de la via :</h6>{{ form.imagen |as_crispy_field }}
-    <h6>Tipo de via :</h6>{{ form.tipo |as_crispy_field }}
-    <h6>Fecha :</h6>{{ form.fecha |as_crispy_field }}
+  {% csrf_token %}
+  {{form.errors}}
+  <h3>Crea tu via</h3>
+  <h6>Nombre del la Via :</h6> {{ form.nombre_via |as_crispy_field }}
+  <h6>Link de la via :</h6>{{ form.link |as_crispy_field }}
+  <h6>Imagen de la via :</h6>{{ form.imagen |as_crispy_field }}
+  <h6>Tipo de via :</h6>{{ form.tipo |as_crispy_field }}
+  <h6>Fecha :</h6>{{ form.fecha |as_crispy_field }}
 
-    <button type="submit" class="btn btn-primary">Guardar</button>
+  <div class="container-fluid">
+    <div class="row">
+      <h6>Seleciona las aciones que se llevara acabo</h6>
+    </div>
+
+      <div class="row">
+        <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+          {{ form.accion |as_crispy_field }}
+        </div>
+      </div>
+  </div>
+  <button type="submit" class="btn btn-primary me-5">Guardar</button>
 </form>
-  {% endblock %}
+{% endblock %}

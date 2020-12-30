@@ -21,6 +21,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('accounts/', include('allauth.urls')),
     path('via', views.agregar_via, name='agregar_via'),
+    path('Listar', views.Listar, name='Listar'),
 
 
 

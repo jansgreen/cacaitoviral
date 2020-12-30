@@ -2,4 +2,16 @@
 {% load static %}
 
 {% block content %}
+
+{% if Listar_vias%}
+{% for listar in Listar_vias%}
+<div class="card" style="width: 18rem;">
+    <img src="..." class="card-img-top" alt="...">
+    <div class="card-body">
+        <h4>{{Listar_vias}}</h4>
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    </div>
+  </div>
+  {% endfor %}
+  {% endif %}
 {% endblock %}

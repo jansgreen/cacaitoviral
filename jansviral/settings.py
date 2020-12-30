@@ -1,4 +1,5 @@
 import os
+from decouple import config
 """
 Django settings for jansviral project.
 
@@ -21,7 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'l(b#smlgkn%((p$*w6%bq%w6@@6^022=_=6g04_6j3cp_4fnc^'
+if 'DEVELOPMENT' in os.environ:
+    SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '')
+else:
+    SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -151,3 +155,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+
+# API_KEYS
+
+API_KEY_YOUTUBE = config('API_KEY_YOUTUBE')

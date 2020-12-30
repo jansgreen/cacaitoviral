@@ -5,6 +5,17 @@ import datetime
 
 # Create your models here.
 
+class Accion(models.Model):
+    """
+    Tipos de vias disponible, una varias vias pueden perteneser solamente a un tipo
+    """
+    accion = models.CharField(max_length=20, null=True, editable=True)
+    precio = models.IntegerField(blank=True, null=True)
+
+
+    def __str__(self):
+        return str(self.accion)
+
 class Tipo(models.Model):
     """
     Tipos de vias disponible, una varias vias pueden perteneser solamente a un tipo
@@ -28,6 +39,8 @@ class Vias(models.Model):
     usuario = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     imagen =  models.ImageField(upload_to="ImagenVia", null=True)
     fecha = models.DateField(default=datetime.date.today)
+    accion = models.ManyToManyField(Accion, blank=True)
+
 
     
     def __str__(self):

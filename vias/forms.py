@@ -24,6 +24,7 @@ class ViasForm(forms.ModelForm):
         'tipo',
         'imagen',
         'fecha',
+        'accion',
         ]
 
     def __init__(self, *args, **kwargs):
@@ -35,9 +36,12 @@ class ViasForm(forms.ModelForm):
             'fecha': 'Fecha',
             'imagen': 'sube la imagen',
             'tipo': 'Fecha',
+            'accion': 'seleciona lo que quieres que se haga en tu via',
 
             }
+
         self.fields['nombre_via'].widget.attrs['autofocus'] = True
+    
         for field in self.fields:
             if self.fields[field].required:
                 placeholder = f'{placeholders[field]} *'
