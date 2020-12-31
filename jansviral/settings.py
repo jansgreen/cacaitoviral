@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 if 'DEVELOPMENT' in os.environ:
     SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '')
 else:
-    SECRET_KEY = config('SECRET_KEY')
+    SECRET_KEY = config('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
