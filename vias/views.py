@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.db.models import Q
+from .youtube_API import Youtube
 
 
 
@@ -14,7 +15,7 @@ def index(request):
     """
     muestra la pagina princiapl
     """
-
+    Youtube
     return render(request, 'index/index.html')
 
 
@@ -59,4 +60,8 @@ def Listar(request):
     context = {
         'Listar_vias': Listar_vias,
     }
-    return render(request, template, context)      
+    return render(request, template, context)  
+
+
+    
+        
