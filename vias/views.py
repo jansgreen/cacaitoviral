@@ -15,7 +15,7 @@ def index(request):
     """
     muestra la pagina princiapl
     """
-    Youtube
+    #Youtube()
     return render(request, 'index/index.html')
 
 

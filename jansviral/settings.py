@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # mis aplicaciones
     'vias',
+    'perfiles.apps.PerfilesConfig',
+
     # librerias externas 
     'crispy_forms',
     'django.contrib.sites',

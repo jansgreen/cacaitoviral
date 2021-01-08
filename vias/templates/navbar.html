@@ -25,6 +25,9 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{% url 'account_login' %}">Iniciar Seccion</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'registro' %}">Registrate</a>
+          </li>
           {% endif %}
           {% if  request.user.is_superuser%}
           <li class="nav-item">
