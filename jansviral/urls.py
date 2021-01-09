@@ -15,28 +15,28 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from vias.views import index, agregar_via, Listar
-from perfiles.views import registro
-
 from django.conf import settings
 from django.conf.urls.static import static
 
+urlpatterns = static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+
+
+
 ### CORRESPONDE A VIAS APP
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index, name='index'),
-    path('via', agregar_via, name='agregar_via'),
-    path('Listar', Listar, name='Listar'),
+    path('perfiles/', include('perfiles.urls')),
+    ]
 
-]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-### CORRESPONDE A PERFILES APP
 urlpatterns += [
-    path('registro', registro, name='registro'),
-
-]
+    path('', include('vias.urls')),
+    ]
 
 urlpatterns += [
     path('accounts/', include('allauth.urls')),
 ]
+
 

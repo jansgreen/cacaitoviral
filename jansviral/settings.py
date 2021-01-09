@@ -51,7 +51,20 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'allauth',
     'allauth.account',
+    # libreria social
     'allauth.socialaccount',
+    #'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
+    #'allauth.socialaccount.providers.twitter',
+    #'allauth.socialaccount.providers.yahoo',
+    #'allauth.socialaccount.providers.instagram',
+    #'allauth.socialaccount.providers.linkedin',
+
+
+
+
+
+
     
 ]
 
@@ -65,6 +78,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 ROOT_URLCONF = 'jansviral.urls'
@@ -170,3 +191,12 @@ YOUTUBE_SCOPE = config('YOUTUBE_SCOPE')
 YOUTUBE_URL_OUTH = config('YOUTUBE_URL_OUTH')
 RESPONSE_TYPE = config('RESPONSE_TYPE')
 ACCESS_TYPE = config('ACCESS_TYPE')
+
+
+#SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
+
+#SOCIAL_AUTH_TWITTER_KEY = ''
+#SOCIAL_AUTH_TWITTER_SECRET = ''
+
+#SOCIAL_AUTH_FACEBOOK_KEY = ''
+#SOCIAL_AUTH_FACEBOOK_SECRET = ''
