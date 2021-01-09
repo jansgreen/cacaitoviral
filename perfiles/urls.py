@@ -5,5 +5,6 @@ from django.conf import settings
 
 
 urlpatterns=[
-    path('registro/', views.registro, name='registro'), 
+    path('registro/', views.registro, name='registro'),
+    path('iniciar/', views.iniciar, name='iniciar')
     ]

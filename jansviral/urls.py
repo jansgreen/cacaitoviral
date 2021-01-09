@@ -22,17 +22,14 @@ urlpatterns = static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
 
-
 ### CORRESPONDE A VIAS APP
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('vias/', include('vias.urls')),
     path('perfiles/', include('perfiles.urls')),
-    ]
+    path('admin/', admin.site.urls),
 
-urlpatterns += [
-    path('', include('vias.urls')),
     ]
 
 urlpatterns += [

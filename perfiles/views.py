@@ -1,6 +1,5 @@
 from django.shortcuts import render
-from .forms import UserPersonalizado, PerfilPersonalizado
-from django.views.generic import TemplateView
+from .forms import UserPersonalizado, PerfilPersonalizado, LoginPersonalizado
 
 
 
@@ -10,15 +9,18 @@ def fedd(request):
     return render(request, 'social/feed.html')
 
 def registro(request):
-    return render(request, 'account/signup.html')
-
-
-"""
-def registro(request):
     data ={
         'form':UserPersonalizado,
         'ext_form': PerfilPersonalizado,
+        'aside_Rigth': 'aside_Rigth',
+        
     }
     return render(request, 'account/signup.html', data)
 
-    """
+def iniciar(request):
+    data ={
+        'form':LoginPersonalizado,
+        'aside_Rigth':'aside_Rigth',
+       
+    }
+    return render(request, 'account/login.html', data)

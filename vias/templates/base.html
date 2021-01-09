@@ -74,7 +74,15 @@
         {% block content %}
         {% endblock %}
       </section>
-      <aside class="col-sm-12 col-md-3 border bg-warning border-white">{% include "sidebar_derecho.html" %}</aside>
+
+      <aside class="col-sm-12 col-md-3 aside_menu_rigth">
+        {% if aside_Rigth %}
+        {% block aside %}
+        {% endblock %}
+        {% else %}
+        {% include "sidebar_derecho.html" %}
+        {% endif %}
+      </aside>
     </div>
   </div>
   </div>

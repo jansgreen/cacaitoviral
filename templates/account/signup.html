@@ -1,23 +1,66 @@
 {% extends "account/base.html" %}
 
 {% load i18n %}
+{% load crispy_forms_tags %}
 
-{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+{% block head_title %}{% trans "Regístrate" %}{% endblock %}
 
 {% block content %}
-<h1>{% trans "Sign Up" %}</h1>
+<h1>{% trans "Regístrate" %}</h1>
 
 <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
 
 <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
   {% csrf_token %}
-  {{ form.as_p }}
-  {{ext_form.as_p}}
+  {{ form_errors }}
+
+  <label for="exampleInputEmail1" class="form-label">Username</label>
+  {{ form.username |as_crispy_field }}
+
+  <label for="exampleInputEmail1" class="form-label">Contraseña</label>
+  {{ form.password1 |as_crispy_field }}
+
+  <label for="exampleInputEmail1" class="form-label">Confirmar Contraseña</label>
+  {{ form.password2 |as_crispy_field }}
+
+  <label for="exampleInputEmail1" class="form-label">Email</label>
+  {{ form.email |as_crispy_field }}
+
+  <label for="exampleInputEmail1" class="form-label">Nombre</label>
+  {{ form.first_name |as_crispy_field }}
+
+  <label for="exampleInputEmail1" class="form-label">Apellido</label>
+  {{ form.last_name |as_crispy_field }}
+
+  <label for="exampleInputEmail1" class="form-label">Foto</label>
+  {{ ext_form.foto |as_crispy_field }}
+
+  <label for="exampleInputEmail1" class="form-label">Direccion</label>
+  {{ ext_form.Direccion |as_crispy_field }}
+
+  <label for="exampleInputEmail1" class="form-label">Telefono</label>
+  {{ ext_form.telefono |as_crispy_field }}
+
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}
+  
   <button class="btn bg-primary text-white" type="submit">{% trans "Registrate" %} &raquo;</button>
 </form>
 
+{% endblock %}
+
+{% block aside %}
+<div class="mt-5">
+  <h1 class="text-center">Seccion Social</h1>
+  <div class="row mt-5 justify-content-center">
+    <div class="socialaccount_ballot">
+      <ul class="socialaccount_providers">
+        {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+      </ul>
+    </div>
+  </div>
+</div>
 
 {% endblock %}
