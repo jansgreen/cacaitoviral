@@ -62,6 +62,14 @@ def Listar(request):
     }
     return render(request, template, context)  
 
+def Mapa(request):
+    Coordenadas = "Coordenadas"
+    template = 'index/Mapa.html'
+    context = {
+        'Coordenadas': Coordenadas,
+    }
+    return render(request, template, context)
+
 
     
         

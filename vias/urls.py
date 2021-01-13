@@ -7,5 +7,7 @@ urlpatterns =[
     path('', views.index, name='index'),
     path('via/', views.agregar_via, name='agregar_via'),
     path('Listar/', views.Listar, name='Listar'),
+    path('Mapa/', views.Mapa, name='Mapa'),
+
     ]
 
