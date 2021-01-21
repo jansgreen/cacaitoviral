@@ -1,5 +1,6 @@
 <!-- RECUERDA CAMBIAR TODAS LAS COMILLAS SIMPLES POR DOBLES-->
 {% load static %}
+{% load socialaccount %}
 {% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
@@ -76,7 +77,7 @@
       </section>
 
       <aside class="col-sm-12 col-md-3 aside_menu_rigth">
-        {% if aside_Rigth %}
+        {% if 'aside_Rigth' %}
         {% block aside %}
         {% endblock %}
         {% else %}

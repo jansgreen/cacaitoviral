@@ -1,5 +1,7 @@
 import os
 from decouple import config
+from django.urls import reverse_lazy
+
 """
 Django settings for jansviral project.
 
@@ -154,7 +156,7 @@ USE_L10N = True
 USE_TZ = True
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = reverse_lazy('Mapa')
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Add to test email:

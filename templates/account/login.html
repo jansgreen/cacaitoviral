@@ -27,14 +27,9 @@
 </p>
 {% endif %}
 
-<form class="login" method="POST" action="{% url 'account_login' %}">
+<form class="signup" id="signup_form" method="post" action="{% url 'iniciar' %}"><!--account_login-->
   {% csrf_token %}
-  <label for="exampleInputEmail1" class="form-label">User</label>
-  {{ form.username |as_crispy_field }}
-
-  <label for="exampleInputEmail1" class="form-label">Contraseña</label>
-  {{ form.password |as_crispy_field }}
-  
+  {{ form|crispy }}
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}
@@ -42,7 +37,6 @@
   <button class="btn bg-primary text-white ml-5" type="submit" style="min-width: 200px;">{% trans "Iniciar" %}</button>
 </form>
 </div>
-
 {% endblock %}
 
 {% block aside %}

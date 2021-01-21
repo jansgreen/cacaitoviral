@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import UserPersonalizado, PerfilPersonalizado, LoginPersonalizado
+from django.contrib.auth import authenticate, login
+
 
 
 
@@ -9,6 +11,8 @@ def fedd(request):
     return render(request, 'social/feed.html')
 
 def registro(request):
+    if request.method == 'POST':
+        return redirect('Mapa')
     data ={
         'form':UserPersonalizado,
         'ext_form': PerfilPersonalizado,
@@ -18,9 +22,20 @@ def registro(request):
     return render(request, 'account/signup.html', data)
 
 def iniciar(request):
-    data ={
+    aside_Rigth = "aside_Rigth"
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+
+        
+        if user is not None:
+            login(request, user)
+            # Redirect to a success page.
+            return redirect('Mapa')
+
+    context ={
         'form':LoginPersonalizado,
-        'aside_Rigth':'aside_Rigth',
-       
+        'aside_Rigth':aside_Rigth,
     }
-    return render(request, 'account/login.html', data)
+    return render(request, 'account/login.html', context)
