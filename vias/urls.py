@@ -8,6 +8,8 @@ urlpatterns =[
     path('via/', views.agregar_via, name='agregar_via'),
     path('Listar/', views.Listar, name='Listar'),
     path('Mapa/', views.Mapa, name='Mapa'),
+    path('selecionado/<str:video_id>', views.selecionado, name='selecionado'),
+
 
     ]
 

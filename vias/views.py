@@ -14,6 +14,9 @@ from .youtube_API import Youtube
 
 
 
+class UrlMain:
+    search_url = 'https://www.googleapis.com/youtube/v3/search'
+    video_url = 'https://www.googleapis.com/youtube/v3/videos'
 
 
 # Create your views here.
@@ -111,6 +114,36 @@ def Mapa(request):
         'Coordenadas': Coordenadas,
     }
     return render(request, template, context)
+
+
+def selecionado(request, video_id):
+    print(video_id)
+    videos =[]
+    url = UrlMain.video_url
+    video_params = {
+        'key' : settings.API_KEY_YOUTUBE,
+        'part': 'snippet,contentDetails',
+        'id': video_id
+    }
+    print(video_params)
+    v = requests.get(url, params=video_params)
+    video_resultados = v.json()['items']
+    for video in video_resultados:
+        datos_videos ={
+            'Id_Canal': video['snippet']['channelId'],
+            'Titulo': video['snippet']['title'],
+            'Id_Video': video['id'],
+            'Duracion': parse_duration(video['contentDetails']['duration']).total_seconds(),
+            'thumbnails': video['snippet']['thumbnails']['high']['url'],
+        }
+
+        videos.append(datos_videos)
+    print(videos)
+    template = 'index/buscador.html'
+    context = {
+        'videos': videos,
+        }   
+    return render(request, 'index/selecionado.html', context)
 
 
     
