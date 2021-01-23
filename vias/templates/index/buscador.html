@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+
+    <form class="d-flex" action="{% url 'agregar_via' %}" method="GET">
+        <input class="form-control me-2" type="search" placeholder="Escribe el nombre de tu canal" aria-label="Search"
+            name="buscador">
+        <button class="btn btn-success" type="submit">Buscar</button>
+    </form>
+    {% if videos %}
+    <div class="row mt-3">
+        <h6>Selecciona el video con el cual creara la Via!</h6>
+
+    </div>
+    <div class="row">
+
+        {% for video in videos %}
+        <div class="col-sm-12 col-md-4">
+            <a href="#" class="">
+                <div class="card mt-5" style="width: 18rem;">
+                    <img src="{{video.thumbnails}}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <p class="card-text"><small class="text-muted">Canal ID {{video.Id_Canal}}</small></p>
+                        <h5 class="card-title">{{video.Titulo}}</h5>
+                        <p class="card-text">Video ID {{video.Id_Video}}</p>
+                        <p class="card-text"><small class="text-muted">Duracion {{video.Duracion}} segundos</small></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+</div>
+
+{% endblock %}
