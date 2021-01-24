@@ -34,7 +34,12 @@
         {% endfor %}
     </div>
     {% endif %}
-
+<form action="">
+    {% csrf_token %}
+{{form}}
+</form>
 </div>
+
+
 
 {% endblock %}
