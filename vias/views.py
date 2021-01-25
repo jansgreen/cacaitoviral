@@ -4,13 +4,14 @@ from  isodate import parse_duration
 
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404, reverse
-from .forms import TiposForm, ViasForm
-from .models import Vias
+from .forms import TiposForm, ViasForm, YoutubeVia
+from .models import Vias, AccionesYutube
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.db.models import Q
 from .youtube_API import Youtube
+
 
 
 
@@ -96,9 +97,7 @@ def Mapa(request):
 
 
 def selecionado(request, video_id):
-    form = ViasForm(request.POST, files=request.FILES) #initial={'user': request.user.id}
-    in_form_link = form['link'].value()
-    in_form_name = form['nombre_via'].value()
+    form = YoutubeVia()
     videos =[]
     url = UrlMain.video_url
     video_params = {
@@ -124,6 +123,27 @@ def selecionado(request, video_id):
         'form': form,
         }   
     return render(request, 'index/selecionado.html', context)
+
+def Crear_via(request):
+#    via = AccionesYutube.objects.create() 
+    if request.method == 'POST':
+        form = YoutubeVia(request.POST)
+        print("profundidad 1")
+        if form:
+            print("profundidad 2")
+            if form.is_valid():
+                print("profundidad 3")
+                form.save()
+                print("profundidad 4")
+                messages.success(request, 'Su via se ha creado exitosamente.')
+                return HttpResponseRedirect(reverse('agregar_via'))
+
+            else:
+                messages.debug(request, f'Ocurrio un error, esto no pudo haber pasado contacta al administrador.')
+                return HttpResponseRedirect(reverse('agregar_via'))
+            
+ 
+
 
 
 #    if request.method == 'POST':

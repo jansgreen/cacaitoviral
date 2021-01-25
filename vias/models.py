@@ -45,3 +45,23 @@ class Vias(models.Model):
     
     def __str__(self):
         return str(self.nombre_via)
+
+class AccionesYutube(models.Model):
+    """
+    estos son los campos que usaremos para almacenar las vias.
+    """
+    class Meta:
+        verbose_name_plural = 'Acciones'
+    Video_ID = models.CharField(max_length=355, null=True, editable=True)
+    Titulo = models.CharField(max_length=355, null=True, editable=True)
+    YoutubeUser = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    comentar = models.IntegerField(null=True, editable=True, default=0)
+    reproducion = models.BooleanField(default=False)
+    compartir = models.IntegerField(null=True, editable=True, default=0)
+    Me_Gusta =  models.IntegerField(null=True, editable=True, default=0)
+    Suscripcion = models.IntegerField(null=True, editable=True, default=0)
+
+
+    
+    def __str__(self):
+        return str(self.Video_ID)

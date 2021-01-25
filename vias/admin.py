@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Vias, Tipo, Accion
+from .models import Vias, Tipo, Accion, AccionesYutube
 
 # Register your models here.
 
@@ -49,7 +49,29 @@ class TiposAdmin(admin.ModelAdmin):
         'pk',
         'tipo_via',
     )
+class AccionesYutubeAdmin(admin.ModelAdmin):
+    fields = (
+        'Video_ID',
+        'Titulo',
+        'comentar',
+        'reproducion',
+        'compartir',
+        'Me_Gusta',
+        'Suscripcion',
+    )
+    list_display =(
+        'pk',
+        'Video_ID',
+        'Titulo',
+        'comentar',
+        'reproducion',
+        'compartir',
+        'Me_Gusta',
+        'Suscripcion',
+    )
 
+    
+admin.site.register(AccionesYutube, AccionesYutubeAdmin)
 admin.site.register(Accion, AccionAdmin)
 admin.site.register(Vias, ViasAdmin)
 admin.site.register(Tipo, TiposAdmin)

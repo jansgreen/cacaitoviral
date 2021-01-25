@@ -12,32 +12,61 @@
     </form>
     {% if videos %}
     <div class="row mt-3">
-        <h1>selecionado</h1>
+        <h1>Crear Via</h1>
 
     </div>
-    <div class="row">
+<hr>
+
+    <div class="row mt-5">
 
         {% for video in videos %}
-        <div class="col-sm-12 col-md-4">
+        <div class="col-sm-12 col-md-6">
             <div class="card" style="width: 100%;">
                 <div class="card-header">
-                  Featured
+                  Video ID: {{video.Id_Video}}
                 </div>
                     <img src="{{video.thumbnails}}" class="card-img-top" alt="...">
                 <div class="card-body">
                   <h5 class="card-title">{{video.Titulo}}</h5>
                   <p class="card-text">Duracion {{video.Duracion}} segundos</p>
-                  <a href="#" class="btn btn-primary">Crear Via</a>
+                  <p class="card-text">Por {{user.username}}</p>
+
                 </div>
               </div>
+        </div>
+        
+        <div class="col-sm-12 col-md-6">
+            <form action="{% url 'Crear_via' %}" method="POST">
+                {% csrf_token %}
+
+            <input type="hidden" value="{{video.Id_Video}}" name="Id_Video" placeholder="{{video.Id_Video}}">
+            <input type="hidden" value="{{video.Titulo}}" name="Titulo" placeholder="{{video.Titulo}}">
+            <input type="text" value="{{user}}" name="user" placeholder="{{user}}">
+           
+            <label class="form-label">Comentar</label>
+                {{form.comentar |as_crispy_field}}
+            
+            <label class="form-label">Reproducir</label>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1" name="Reproducir">
+                    <label class="form-check-label" for="exampleCheck1">Al seleccionar esta casilla los usuario van a ver el video en su totalidad</label>
+                  </div>
+            <label class="form-label">Compartir</label>
+                {{form.compartir |as_crispy_field}}
+            
+            <label class="form-label">Me Gusta</label>
+                {{form.Me_Gusta |as_crispy_field}}
+            
+            <label class="form-label">Suscripcion</label>
+                {{form.Suscripcion |as_crispy_field}}
+            
+            <button type="submit" class="btn btn-success">Crear Via</button>
+            </form>
         </div>
         {% endfor %}
     </div>
     {% endif %}
-<form action="">
-    {% csrf_token %}
-{{form}}
-</form>
+
 </div>
 
 

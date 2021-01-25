@@ -1,6 +1,6 @@
 from django import forms
 from .widgets import CustomClearableFileInput
-from .models import Vias, Tipo
+from .models import Vias, Tipo, AccionesYutube
 from django.contrib.auth.models import User
 
 
@@ -41,7 +41,13 @@ class ViasForm(forms.ModelForm):
             }
 
         self.fields['nombre_via'].widget.attrs['autofocus'] = True
-    
+        attr = ['type', 'class']
+        for attrx in attr:
+            self.fields['accion'].widget.attrs[attrx] = 'checkbox'
+            self.fields['accion'].widget.attrs[attrx] = 'bg-prymary'
+
+
+
         for field in self.fields:
             if self.fields[field].required:
                 placeholder = f'{placeholders[field]} *'
@@ -53,3 +59,40 @@ class ViasForm(forms.ModelForm):
             self.fields[field].widget.attrs['aria-label'] = 'Sizing example input'
             self.fields[field].widget.attrs['aria-describedby'] = 'basic-addon2'
             self.fields[field].label = False
+
+
+
+OpcionesYutube = [
+    ('comentar', 'Comentar'),
+    ('reproducion', 'Reproduccion'),
+    ('compartir', 'Compartir'),
+    ('meGusta', 'Me Gusta'),
+
+]
+
+class YoutubeVia(forms.ModelForm):
+    class Meta:
+        model = AccionesYutube
+        exclude = ['YoutubeUser', 'reproducion',]
+        fields = [
+        'Video_ID',
+        'Titulo',
+        'comentar',
+        'compartir',
+        'Me_Gusta',
+        'Suscripcion',
+
+        ]    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for field in self.fields:
+            if self.fields['Titulo'] or self.fields['Video_ID']:
+                self.fields[field].widget.attrs['type'] = 'text'
+            else:
+                self.fields[field].widget.attrs['type'] = 'number'
+            self.fields[field].widget.attrs['class'] = 'form-control'
+            self.fields[field].widget.attrs['aria-label'] = 'Sizing example input'
+            self.fields[field].widget.attrs['aria-describedby'] = 'basic-addon2'
+            self.fields[field].label = False
+
