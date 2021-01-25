@@ -41,8 +41,10 @@
 
             <input type="hidden" value="{{video.Id_Video}}" name="Id_Video" placeholder="{{video.Id_Video}}">
             <input type="hidden" value="{{video.Titulo}}" name="Titulo" placeholder="{{video.Titulo}}">
-            <input type="text" value="{{user}}" name="user" placeholder="{{user}}">
-           
+            <input type="hidden" value="{{user}}" name="user" placeholder="{{user}}">
+            <label class="form-label">user</label>
+            {{form.YoutubeUser |as_crispy_field}}
+
             <label class="form-label">Comentar</label>
                 {{form.comentar |as_crispy_field}}
             
@@ -52,7 +54,10 @@
                     <label class="form-check-label" for="exampleCheck1">Al seleccionar esta casilla los usuario van a ver el video en su totalidad</label>
                   </div>
             <label class="form-label">Compartir</label>
-                {{form.compartir |as_crispy_field}}
+                  {{form.compartir |as_crispy_field}}
+
+            <label class="form-label">Reproducion</label>
+                {{form.reproducion |as_crispy_field}}
             
             <label class="form-label">Me Gusta</label>
                 {{form.Me_Gusta |as_crispy_field}}

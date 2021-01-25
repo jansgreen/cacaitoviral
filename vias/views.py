@@ -125,11 +125,13 @@ def selecionado(request, video_id):
     return render(request, 'index/selecionado.html', context)
 
 def Crear_via(request):
-#    via = AccionesYutube.objects.create() 
+    via = AccionesYutube.objects.create() 
     if request.method == 'POST':
-        form = YoutubeVia(request.POST)
+        checkbox = request.GET.get('Reproducir')
+        form = YoutubeVia(request.POST, request.FILES)
         print("profundidad 1")
         if form:
+            print(checkbox)
             print("profundidad 2")
             if form.is_valid():
                 print("profundidad 3")

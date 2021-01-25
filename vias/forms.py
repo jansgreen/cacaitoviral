@@ -73,22 +73,18 @@ OpcionesYutube = [
 class YoutubeVia(forms.ModelForm):
     class Meta:
         model = AccionesYutube
-        exclude = ['YoutubeUser', 'reproducion',]
-        fields = [
-        'Video_ID',
-        'Titulo',
-        'comentar',
-        'compartir',
-        'Me_Gusta',
-        'Suscripcion',
+        fields = '__all__' 
 
-        ]    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         for field in self.fields:
             if self.fields['Titulo'] or self.fields['Video_ID']:
                 self.fields[field].widget.attrs['type'] = 'text'
+            elif self.fields['reproducion']:
+                self.fields[field].widget.attrs['type'] = 'checkbox'
+            elif self.fields['YoutubeUser']:
+                self.fields[field].widget.attrs['type'] = 'hidden'
             else:
                 self.fields[field].widget.attrs['type'] = 'number'
             self.fields[field].widget.attrs['class'] = 'form-control'
