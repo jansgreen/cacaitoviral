@@ -7,12 +7,12 @@
     {% for brand in provider.get_brands %}
       <ul class="list-group">
         <li class="list-group-item">
-          <a title="{{brand.name}}" class="btn socialaccount_provider {{provider.id}} {{brand.id}}"
+          <a title="{{brand.name}}" class="btn socialaccount_provider {{provider.id}} {{brand.name}}"
             href="{% provider_login_url provider.id openid=brand.openid_url process=process %}">{{brand.name}}</a>
         </li>
       </ul>
       {% endfor %}
   {% endif %}
-      <a title="{{provider.name}}" class="btn socialaccount_provider {{provider.id}}" 
+      <a title="{{provider.name}}" class="btn socialaccount_provider {{provider.id}} {{provider.name}}"
         href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">{{provider.name}}</a>
 {% endfor %}

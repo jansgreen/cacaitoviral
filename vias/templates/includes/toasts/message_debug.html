@@ -1,10 +1,10 @@
 {% if messages %}
-<div class="toast mx-auto" data-autohide="false">
+<div class="toast mx-auto" data-autohide="false" style="max-width: 250px;>
   <div class="toast-header bg-success text-white">
     <i class="fas fa-bell rounded mr-3  text-white"></i>
     <strong class="mr-3">Feliciadas</strong>
     <small class="ml-auto">11 mins ago</small>
-    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
   </div>
   <div class="toast-body">
     {% for message in messages %}

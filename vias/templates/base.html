@@ -19,7 +19,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- FONT –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   {% block corecss %}
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway:400,300,600">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap">
@@ -57,31 +58,37 @@
       </style>
     </header>
   </div>
-
-  {% include "toast.html" %}
-
-  {% endblock %}
-
-  <!-- SECTION-->
-  <div class="container-fluid">
-    <div class="row">
-      <nav class="col-sm-12 col-md-3 border bg-danger border-white"> {% include "sidebar_izquierdo.html" %}
-      </nav>
-      <section class="col-sm-12 col-md-6 border border-white">
-        {% block content %}
-        {% endblock %}
-      </section>
-
-      <aside class="col-sm-12 col-md-3 aside_menu_rigth">
-        {% if 'aside_Rigth' %}
-        {% block aside %}
-        {% endblock %}
-        {% else %}
-        {% include "sidebar_derecho.html" %}
-        {% endif %}
-      </aside>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-4">
+        {% include "toast.html" %}
+      </div>
     </div>
   </div>
+
+
+    {% endblock %}
+
+    <!-- SECTION-->
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-sm-12 col-md-3 border bg-danger border-white"> {% include "sidebar_izquierdo.html" %}
+        </nav>
+        <section class="col-sm-12 col-md-6 border border-white">
+          {% block content %}
+          {% endblock %}
+        </section>
+
+        <aside class="col-sm-12 col-md-3 aside_menu_rigth">
+          {% if 'aside_Rigth' %}
+          {% block aside %}
+          {% endblock %}
+          {% else %}
+          {% include "sidebar_derecho.html" %}
+          {% endif %}
+        </aside>
+      </div>
+    </div>
   </div>
 
   <div class="container-fluid mt-5" style="background-color: #0098f0;">
