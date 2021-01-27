@@ -1,0 +1,64 @@
+
+
+.cabezera-link-principal{
+    font-family: 'Dancing Script', cursive;
+
+}
+
+.navbar{
+
+        overflow: hidden;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1;
+}
+
+.distribuir_icon_index, .user_icon_index {
+    font-size: 15rem;
+  }
+
+.facebook_footer{
+    font-size: 2rem;
+    color:#0400ff;
+
+  }
+.youtube_footer{
+    font-size: 2rem;
+    color:#ff0000;
+
+}
+
+.instegram_footer{
+    font-size: 2rem;
+    color:#ea00ff;
+
+}
+
+.twitter_footer{
+    font-size: 2rem;
+    color:#66baff;
+
+}
+
+.li_footer_index{
+    background-color: #0098f0;
+
+}
+
+.facebook_footer:hover, .youtube_footer:hover, .instegram_footer:hover, .twitter_footer:hover {
+    font-size: 3rem;
+    color:#ffffff;
+}
+
+  footer{
+      background-color: #0098f0;
+  }
+
+  .toast{
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1; 
+  }
