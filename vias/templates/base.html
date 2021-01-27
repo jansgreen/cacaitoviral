@@ -24,8 +24,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap">
   <!-- CSS  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link rel="icon" type="image/png" href="static/img/favicon.jpg">
-  <link type="text/css" rel="stylesheet" href="static/css/style.css">
+  <link rel="icon" type="image/png" href="{% static '/img/favicon.jpg' %}">
+  <link type="text/css" rel="stylesheet" href="{% static '/css/style.css' %}">
   <!-- Favicon  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   {% endblock %}
 
@@ -59,10 +59,6 @@
   </div>
 
   {% include "toast.html" %}
-
-  <!-- EL TOAST NO SE ESTA VISIALIZANDO-->
-
-
 
   {% endblock %}
 
