@@ -88,9 +88,12 @@ def Listar(request):
     return render(request, template, context)  
 
 def Mapa(request):
+    
+    youtube_list = AccionesYutube.objects.all()
     Coordenadas = "Coordenadas"
     template = 'index/Mapa.html'
     context = {
+        'youtube_list': youtube_list,
         'Coordenadas': Coordenadas,
     }
     return render(request, template, context)
@@ -125,24 +128,27 @@ def selecionado(request, video_id):
     return render(request, 'index/selecionado.html', context)
 
 def Crear_via(request):
-    via = AccionesYutube.objects.create() 
     if request.method == 'POST':
         checkbox = request.GET.get('Reproducir')
         form = YoutubeVia(request.POST, request.FILES)
-        print("profundidad 1")
         if form:
-            print(checkbox)
-            print("profundidad 2")
             if form.is_valid():
-                print("profundidad 3")
+                form_user = form.save(commit=False)
+                form_user.usuario = request.user
                 form.save()
-                print("profundidad 4")
                 messages.success(request, 'Su via se ha creado exitosamente.')
                 return HttpResponseRedirect(reverse('agregar_via'))
 
             else:
                 messages.debug(request, f'Ocurrio un error, esto no pudo haber pasado contacta al administrador.')
                 return HttpResponseRedirect(reverse('agregar_via'))
+        else:
+            messages.debug(request, f'Ocurrio un error, esto no pudo haber pasado contacta al administrador.')
+            return HttpResponseRedirect(reverse('agregar_via'))
+    else:
+        messages.debug(request, f'Accesso Denegado.')
+        return HttpResponseRedirect(reverse('Mapa'))
+
             
  
 

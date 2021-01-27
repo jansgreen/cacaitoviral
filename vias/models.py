@@ -52,9 +52,10 @@ class AccionesYutube(models.Model):
     """
     class Meta:
         verbose_name_plural = 'Acciones'
-    Video_ID = models.CharField(max_length=355, null=True, editable=True)
+    Id_Video = models.CharField(max_length=355, null=True, editable=True)
+    thumbnails =  models.URLField(max_length=200, default=True)
     Titulo = models.CharField(max_length=355, null=True, editable=True)
-    YoutubeUser = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     comentar = models.IntegerField(null=True, editable=True, default=0)
     reproducion = models.BooleanField(default=False)
     compartir = models.IntegerField(null=True, editable=True, default=0)
@@ -64,4 +65,4 @@ class AccionesYutube(models.Model):
 
     
     def __str__(self):
-        return str(self.Video_ID)
+        return str(self.Titulo)

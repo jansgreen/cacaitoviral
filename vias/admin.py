@@ -51,7 +51,9 @@ class TiposAdmin(admin.ModelAdmin):
     )
 class AccionesYutubeAdmin(admin.ModelAdmin):
     fields = (
-        'Video_ID',
+        'user',
+        'Id_Video',
+        'thumbnails',
         'Titulo',
         'comentar',
         'reproducion',
@@ -61,7 +63,9 @@ class AccionesYutubeAdmin(admin.ModelAdmin):
     )
     list_display =(
         'pk',
-        'Video_ID',
+        'user',
+        'Id_Video',
+        'thumbnails',
         'Titulo',
         'comentar',
         'reproducion',

@@ -4,19 +4,22 @@
 
 {% block content %}
 <div class="container">
-    <div class="row">
-      <div class="col-sm-12 col-md-3">
-        One of three columns {{user.username}}
-      </div>
-      <div class="col-sm-12 col-md-3">
-        One of three columns
-      </div>
-      <div class="col-sm-12 col-md-3">
-        One of three columns
-      </div>
-      <div class="col-sm-12 col-md-3">
-        One of three columns
+{% if youtube_list %}
+  <div class="row">
+    {% for youtube in youtube_list %}
+    <div class="col-sm-12 col-md-3 ml-5 mr-5 mb-5 mt-5">
+      <div class="card" style="width: 18rem;">
+        <img src="{{youtube.thumbnails}}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{youtube.Titulo}}</h5>
+          <p class="card-text">Duracion</p>
+          <a href="#" class="btn btn-primary">Caminar</a>
+        </div>
       </div>
     </div>
+    {% endfor %}
   </div>
+  {% endif %}
+
+</div>
 {% endblock %}
