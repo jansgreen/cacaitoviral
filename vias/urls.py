@@ -10,6 +10,8 @@ urlpatterns =[
     path('Mapa/', views.Mapa, name='Mapa'),
     path('selecionado/<str:video_id>', views.selecionado, name='selecionado'), 
     path('Crear_via/', views.Crear_via, name='Crear_via'),
+    path('pasos/<str:Id_Video>', views.pasos, name='pasos'),
+
 
 
     ]

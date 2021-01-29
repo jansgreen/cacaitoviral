@@ -151,7 +151,13 @@ def Crear_via(request):
 
             
  
-
+def pasos(request, Id_Video):
+    templates = 'index/pasos.html'
+    print(Id_Video)
+    context={
+        'Id_Video':Id_Video,
+    }
+    return render(request, templates, context)
 
 
 #    if request.method == 'POST':

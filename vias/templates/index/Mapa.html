@@ -8,12 +8,12 @@
   <div class="row">
     {% for youtube in youtube_list %}
     <div class="col-sm-12 col-md-3 ml-5 mr-5 mb-5 mt-5">
-      <div class="card" style="width: 18rem;">
+      <div class="card" style="width: 14rem;">
         <img src="{{youtube.thumbnails}}" class="card-img-top" alt="...">
         <div class="card-body">
           <h5 class="card-title">{{youtube.Titulo}}</h5>
           <p class="card-text">Duracion</p>
-          <a href="#" class="btn btn-primary">Caminar</a>
+          <a href="{% url 'pasos' youtube.Id_Video %}" class="btn btn-primary">Caminar</a>
         </div>
       </div>
     </div>
