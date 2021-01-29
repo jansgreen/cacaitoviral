@@ -1,32 +1,97 @@
 {% if messages %}
 <div class="toast mx-auto" data-autohide="false">
 
-{% for message in messages %}
+    {% for message in messages %}
 
-{% if message.tags == 'success' %}
-<!--MENSAJE EXITOSO-->
-{% include 'includes/toasts/message_success.html' %}
-{% endif %}
+        {% if message.tags == 'success' %}
+        <!--MENSAJE EXITOSO-->
+            {% if messages %}
+            <div class="toast mx-auto" data-autohide="false" style="max-width: 250px;">
+                <div class="toast-header bg-success text-white">
+                    <i class="fas fa-bell rounded mr-3  text-white"></i>
+                    <strong class="mr-3">Feliciadas</strong>
+                    <small class="ml-auto"></small>
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    {% for message in messages %}
+                    {{ message }}
+                    {% endfor %} </div>
+            </div>
+            {% endif %}
+        {% endif %}
 
-<!--MENSAJE ERROR-->
-{% if message.tags == 'error' %}
-{% include 'includes/toasts/message_error.html' %}
-{% endif %}
+        <!--MENSAJE ERROR-->
+        {% if message.tags == 'error' %}
+            {% if messages %}
+            <div class="toast mx-auto" data-autohide="false" style="max-width: 250px;">
+                <div class="toast-header bg-danger text-white">
+                    <i class="fas fa-times text-white"></i>
+                    <strong class="mr-3">Sorry</strong>
+                    <small class="ml-auto">11 mins ago</small>
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    {% for message in messages %}
+                    {{ message }}
+                    {% endfor %} </div>
+            </div>
+            {% endif %}
+        {% endif %}
 
-<!--MENSAJE ADVERTENCIA-->
-{% if message.tags == 'warning' %}
-{% include 'includes/toasts/message_warning.html' %}
-{% endif %}
+        <!--MENSAJE ADVERTENCIA-->
+        {% if message.tags == 'warning' %}
+            {% if messages %}
+            <div class="toast mx-auto" data-autohide="false" style="max-width: 250px;">
+                <div class="toast-header bg-warning text-white">
+                    <i class="fas fa-exclamation-circle rounded mr-3  text-white"></i>
+                    <strong class="mr-3">Aviso</strong>
+                    <small class="ml-auto">11 mins ago</small>
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    {% for message in messages %}
+                    {{ message }}
+                    {% endfor %} </div>
+            </div>
+            {% endif %}
+        {% endif %}
 
-<!--MENSAJE INFORMACION-->
-{% if message.tags == 'info' %}
-{% include 'includes/toasts/message_info.html' %}
-{% endif %}
+        <!--MENSAJE INFORMACION-->
+        {% if message.tags == 'info' %}
+            {% if messages %}
+            <div class="toast mx-auto" data-autohide="false" style="max-width: 250px;">
+                <div class="toast-header bg-danger text-white">
+                    <i class="fas fa-times text-white"></i>
+                    <strong class="mr-3">Sorry</strong>
+                    <small class="ml-auto">11 mins ago</small>
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    {% for message in messages %}
+                    {{ message }}
+                    {% endfor %} </div>
+            </div>
+            {% endif %}
+        {% endif %}
 
-<!--MENSAJE DEPURAR-->
-{% if message.tags == 'debug' %}
-{% include 'includes/toasts/message_debug.html' %}
-{% endif %}
- {% endfor %}
+        <!--MENSAJE DEPURAR-->
+        {% if message.tags == 'debug' %}
+            {% if messages %}
+            <div class="toast mx-auto" data-autohide="false" style="max-width: 250px;">
+                <div class="toast-header bg-success text-white">
+                    <i class="fas fa-bell rounded mr-3  text-white"></i>
+                    <strong class="mr-3">Feliciadas</strong>
+                    <small class="ml-auto">11 mins ago</small>
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    {% for message in messages %}
+                    {{ message }}
+                    {% endfor %} </div>
+            </div>
+            {% endif %} 
+        {% endif %}
+    {% endfor %}
 </div>
 {% endif %}
