@@ -25,7 +25,6 @@ class AccionesYutube(models.Model):
     compartir = models.IntegerField(null=True, editable=True, default=0)
     Me_Gusta =  models.IntegerField(null=True, editable=True, default=0)
     Suscripcion = models.IntegerField(null=True, editable=True, default=0)
-    idioma = models.CharField(max_length=5, null=True, editable=True)
 
     
     def __str__(self):

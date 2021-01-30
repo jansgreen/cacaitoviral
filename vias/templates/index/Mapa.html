@@ -4,9 +4,10 @@
 
 {% block content %}
 <div class="container">
-{% if youtube_list %}
+  {% if page_obj %}
   <div class="row">
-    {% for youtube in youtube_list %}
+    {% for youtube in page_obj %}
+    {# Each "movie" is a movie model object. #}
     <div class="col-sm-12 col-md-3 ml-5 mr-5 mb-5 mt-5">
       <div class="card" style="width: 14rem;">
         <img src="{{youtube.thumbnails}}" class="card-img-top" alt="...">
@@ -20,6 +21,34 @@
     {% endfor %}
   </div>
   {% endif %}
-
 </div>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-4">
+      <nav aria-label="...">
+        <ul class="pagination pagination-lg">
+          <li class="page-item active" aria-current="page">
+            {% if page_obj.has_previous %}
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Atras</a>
+            {% endif %}
+          </li>
+          <li class="page-item"><a class="page-link" href="#">
+              <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+              </span></a></li>
+          <li class="page-item"> {% if page_obj.has_next %}
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a>
+            {% endif %}
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
 {% endblock %}

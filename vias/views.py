@@ -3,11 +3,12 @@ import requests
 from  isodate import parse_duration
 
 from django.conf import settings
-from django.shortcuts import render, get_object_or_404, reverse
+from django.shortcuts import render, get_object_or_404, reverse, redirect
 from .forms import YoutubeForms
 from .models import AccionesYutube
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
 from django.db.models import Q
 from .youtube_API import Youtube
@@ -86,49 +87,57 @@ def Listar(request):
     return render(request, template, context)  
 
 def Mapa(request):
-    
     youtube_list = AccionesYutube.objects.all()
+    paginator = Paginator(youtube_list, 20)
     Coordenadas = "Coordenadas"
     template = 'index/Mapa.html'
-    context = {
-        'youtube_list': youtube_list,
-        'Coordenadas': Coordenadas,
-    }
+    if paginator:
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        context = {
+            'page_obj': page_obj,
+            'Coordenadas': Coordenadas,
+            }
+        return render(request, 'index/Mapa.html', context)
     return render(request, template, context)
 
 
 def selecionado(request, video_id):
-    form = YoutubeVia()
-    videos =[]
-    url = UrlMain.video_url
-    video_params = {
-        'key' : settings.API_KEY_YOUTUBE,
-        'part': 'snippet,contentDetails',
-        'id': video_id
-    }
-    v = requests.get(url, params=video_params)
-    video_resultados = v.json()['items']
-    for video in video_resultados:
-        datos_videos ={
-            'Id_Canal': video['snippet']['channelId'],
-            'Titulo': video['snippet']['title'],
-            'Id_Video': video['id'],
-            'Duracion': parse_duration(video['contentDetails']['duration']).total_seconds(),
-            'thumbnails': video['snippet']['thumbnails']['high']['url'],
+    form = YoutubeForms()
+    Vias_Id = AccionesYutube.objects.filter(Q(Id_Video__icontains = video_id))
+    if Vias_Id:
+        messages.warning(request, f'Ya existe una via con este video, Selecione otro video o actualice el existente')
+        return redirect('agregar_via')
+    else:
+        videos =[]
+        url = UrlMain.video_url
+        video_params = {
+            'key' : settings.API_KEY_YOUTUBE,
+            'part': 'snippet,contentDetails',
+            'id': video_id
         }
+        v = requests.get(url, params=video_params)
+        video_resultados = v.json()['items']
+        for video in video_resultados:
+            datos_videos ={
+                'Id_Canal': video['snippet']['channelId'],
+                'Titulo': video['snippet']['title'],
+                'Id_Video': video['id'],
+                'Duracion': parse_duration(video['contentDetails']['duration']).total_seconds(),
+                'thumbnails': video['snippet']['thumbnails']['high']['url'],
+            }
 
-        videos.append(datos_videos)
-    template = 'index/buscador.html'
-    context = {
-        'videos': videos,
-        'form': form,
-        }   
-    return render(request, 'index/selecionado.html', context)
+            videos.append(datos_videos)
+        template = 'index/buscador.html'
+        context = {
+            'videos': videos,
+            'form': form,
+            }   
+        return render(request, 'index/selecionado.html', context)
 
 def Crear_via(request):
     if request.method == 'POST':
-        checkbox = request.GET.get('Reproducir')
-        form = YoutubeVia(request.POST, request.FILES)
+        form = YoutubeForms(request.POST, request.FILES)
         if form:
             if form.is_valid():
                 form_user = form.save(commit=False)
@@ -149,27 +158,15 @@ def Crear_via(request):
 
             
  
-def pasos(request):
-    return
-
-
-#    if request.method == 'POST':
-#        form = ViasForm(request.POST, files=request.FILES) #initial={'user': request.user.id}
-#        in_form_link = form['link'].value()
-#        in_form_name = form['nombre_via'].value()
-#        if form:
-#            filter_via = Vias.objects.filter(Q(link__icontains = in_form_link)).distinct()
-#            if filter_via:
-#                messages.warning(request, f'Usted ya tiene una esta via con el nombre {in_form_name}')
-#            else:
-#                if form.is_valid():
-#                    form_user = form.save(commit=False)
-#                    form_user.usuario = request.user  # The logged-in user
-#                    form.save()
-#                    messages.success(request, 'Su via ha sido guardada exitosamente.')
-#                    return HttpResponseRedirect(reverse('agregar_via'))
-#                else:
-#                    messages.debug(request, f'Ocurrio un error, esto no pudo haber pasado contacta al administrador.')
+def pasos(request, Id_Video):
+    via = AccionesYutube.objects.filter(Q(Id_Video__icontains = Id_Video))
+    
+    template = "index/pasos.html"
+    context = {
+        'via': via,
+        'video':Id_Video,
+    }
+    return render (request, template, context)
 
 
     

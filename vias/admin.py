@@ -17,7 +17,6 @@ class AccionesYutubeAdmin(admin.ModelAdmin):
         'compartir',
         'Me_Gusta',
         'Suscripcion',
-        'idioma',
     )
     list_display =(
         'pk',
@@ -25,11 +24,12 @@ class AccionesYutubeAdmin(admin.ModelAdmin):
         'Id_Video',
         'thumbnails',
         'Titulo',
+        'segundos',
+        'repetir',
         'comentar',
         'compartir',
         'Me_Gusta',
         'Suscripcion',
-        'idioma',
     )
 
 
