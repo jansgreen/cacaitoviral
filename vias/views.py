@@ -4,8 +4,8 @@ from  isodate import parse_duration
 
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404, reverse
-from .forms import TiposForm, ViasForm, YoutubeVia
-from .models import Vias, AccionesYutube
+from .forms import YoutubeForms
+from .models import AccionesYutube
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.http import HttpResponseRedirect
@@ -36,9 +36,7 @@ def agregar_via(request):
     buscar = request.GET.get("buscador")
     search_url = UrlMain.search_url
     video_url = UrlMain.video_url
-    video_ids = []
     videos = []
-
     params = {
         'part': 'snippet',
         'q' : buscar,
@@ -151,13 +149,8 @@ def Crear_via(request):
 
             
  
-def pasos(request, Id_Video):
-    templates = 'index/pasos.html'
-    print(Id_Video)
-    context={
-        'Id_Video':Id_Video,
-    }
-    return render(request, templates, context)
+def pasos(request):
+    return
 
 
 #    if request.method == 'POST':

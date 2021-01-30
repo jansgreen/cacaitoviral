@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     # mis aplicaciones
     'vias',
     'perfiles.apps.PerfilesConfig',
+    'embed_video',
+
 
     # librerias externas 
     'crispy_forms',

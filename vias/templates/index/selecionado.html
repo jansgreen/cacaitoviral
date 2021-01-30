@@ -46,6 +46,9 @@
                 <input type="hidden" value="{{video.Titulo}}" name="Titulo" placeholder="{{video.Titulo}}">
                 <input type="hidden" value="{{user.id}}" name="user" placeholder="{{user.id}}">
                 <input type="hidden" value="{{video.thumbnails}}" name="thumbnails" placeholder="{{video.thumbnails}}">
+                <input type="hidden" value="{{video.idioma}}" name="idioma" placeholder="{{video.thumbnails}}">
+
+                
 
                 <label class="form-label">Comentar</label>
                 {{form.comentar |as_crispy_field}}
@@ -53,8 +56,17 @@
                 <label class="form-label">Compartir</label>
                 {{form.compartir |as_crispy_field}}
 
-                <label class="form-label">Reproducion</label>
-                {{form.reproducion |as_crispy_field}}
+                <label class="form-label mt-3">Reproduccion</label>
+                <div class="input-group mb-3 ">
+                    <span class="input-group-text">Visualizacion</span>
+                    {{form.segundos |as_crispy_field}}
+                    <span class="input-group-text">segundos</span>
+                  </div>
+                <div class="input-group mb-3 mt-3">
+                    <span class="input-group-text">Repetir Vizualizacion</span>
+                    {{form.repetir |as_crispy_field}}
+                  </div>
+
 
                 <label class="form-label">Me Gusta</label>
                 {{form.Me_Gusta |as_crispy_field}}

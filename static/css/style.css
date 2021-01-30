@@ -21,11 +21,13 @@
 .facebook_footer{
     font-size: 2rem;
     color:#0400ff;
+    transition: width 2s;
 
-  }
+}
 .youtube_footer{
     font-size: 2rem;
     color:#ff0000;
+    
 
 }
 
@@ -49,6 +51,7 @@
 .facebook_footer:hover, .youtube_footer:hover, .instegram_footer:hover, .twitter_footer:hover {
     font-size: 3rem;
     color:#ffffff;
+
 }
 
   footer{
