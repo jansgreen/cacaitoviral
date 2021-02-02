@@ -4,12 +4,12 @@
 {% block content %}
 
 {% if via %}
-  {% for vias in via %}
-    <div class="progress">
-      <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 50%" aria-valuenow="10"
-        aria-valuemin="0" aria-valuemax="{{vias.segundos}}"></div>
-    </div>
-  {% endfor %}
+{% for vias in via %}
+<div class="progress">
+  <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 50%" aria-valuenow="10"
+    aria-valuemin="0" aria-valuemax="{{vias.segundos}}"></div>
+</div>
+{% endfor %}
 {% endif %}
 
 {% if video %}
@@ -20,29 +20,35 @@
     allowfullscreen></iframe>
 </div>
 {% endif %}
-  {% if via %}
-    {% for via_data in via %}
-        {% if via_data.comentar > 0 %}
-          <div class="input-group">
-            <span class="input-group-text">Comentar</span>
-            <textarea class="form-control" aria-label="With textarea"></textarea>
-          </div>
-        {% endif %}
-        <div class="container mt-3">
-          <div class="row justify-content-center">
-            {% if via_data.Me_Gusta > 0 %}
-              <div class="col-2">
-                <i class="far fa-thumbs-up"></i>
-              </div>
-            {% endif %}
+{% if via %}
+{% for via_data in via %}
+{% if via_data.comentar > 0 %}
+<div class="input-group">
+  <span class="input-group-text">Comentar</span>
+  <textarea class="form-control" aria-label="With textarea"></textarea>
+</div>
+{% endif %}
+<div class="container mt-3">
+  <div class="row justify-content-center">
+    {% if via_data.Me_Gusta > 0 %}
+    <div class="col-2">
+      {% if video %}
 
-            {% if via_data.Suscripcion > 0 %}
-              <div class="col-2">
-                <i class="fas fa-users"></i>
-              </div>
-            {% endif %}
-      {% endfor %}
-  {% endif %}
+      <a href="{% url 'Youtube_like' video %}">
+        <i class="far fa-thumbs-up"></i>
+      </a>
+      {% endif %}
+
+    </div>
+    {% endif %}
+
+    {% if via_data.Suscripcion > 0 %}
+    <div class="col-2">
+      <i class="fas fa-users"></i>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
 
   </div>
 </div>

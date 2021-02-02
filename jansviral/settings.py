@@ -133,6 +133,7 @@ SOCIALACCOUNT_PROVIDERS = {
         'SCOPE': [
             'profile',
             'email',
+
         ],
         'AUTH_PARAMS': {
             'access_type': 'online',
@@ -214,6 +215,7 @@ YOUTUBE_SCOPE = config('YOUTUBE_SCOPE')
 YOUTUBE_URL_OUTH = config('YOUTUBE_URL_OUTH')
 RESPONSE_TYPE = config('RESPONSE_TYPE')
 ACCESS_TYPE = config('ACCESS_TYPE')
+YOUTUBE_CLIENT_SECRET = config('YOUTUBE_CLIENT_SECRET')
 
 
 #SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'

@@ -11,6 +11,7 @@ urlpatterns =[
     path('selecionado/<str:video_id>', views.selecionado, name='selecionado'), 
     path('Crear_via/', views.Crear_via, name='Crear_via'),
     path('pasos/<str:Id_Video>', views.pasos, name='pasos'),
+    path('Youtube_like/<str:video>', views.Youtube_like, name='Youtube_like'),
 
 
 
