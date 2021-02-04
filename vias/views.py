@@ -1,10 +1,10 @@
 import requests
+# YOUTUBE API IMPORT
+import os
 import google_auth_oauthlib.flow
 import googleapiclient.discovery
 import googleapiclient.errors
-import httplib2
-import os
-import sys
+
 
 from  isodate import parse_duration
 
@@ -18,13 +18,14 @@ from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
 from django.db.models import Q
 # YOUTUBE API
-from apiclient.discovery import build
-from apiclient.errors import HttpError
-from oauth2client.client import flow_from_clientsecrets
-from oauth2client.file import Storage
-from oauth2client.tools import argparser, run_flow
+#from google_auth_oauthlib.flow import Flow
+from google_auth_oauthlib.flow import InstalledAppFlow
 
 
+#YOUTUBE SCOPLES
+scopes = ["https://www.googleapis.com/auth/youtube",
+          "https://www.googleapis.com/auth/youtube.force-ssl",
+          "https://www.googleapis.com/auth/youtubepartner"]
 
 
 YOUTUBE_READ_WRITE_SCOPE = "https://www.googleapis.com/auth/youtube"
@@ -133,7 +134,6 @@ def selecionado(request, video_id):
             'id': video_id
         }
         v = requests.get(url, params=video_params)
-        print(url)
         video_resultados = v.json()['items']
         for video in video_resultados:
             datos_videos ={
@@ -216,12 +216,49 @@ def get_authenticated_service():
     return build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, http=credentials.authorize(httplib2.Http()))
 
 def Youtube_like(request, video):
-    if video:
-        get_authenticated_service()
+    # Disable OAuthlib's HTTPS verification when running locally.
+    # *DO NOT* leave this option enabled in production.
+    os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
-    youtube.videos().rate(
-        id=video,
-        rating="like"
-    ).execute()
+    api_service_name = "youtube"
+    api_version = "v3"
+    client_secrets_file = "client_secret.json"
 
-    return HttpResponseRedirect(reverse('Mapa'))
+    # Get credentials and create an API client
+    flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
+        client_secrets_file, scopes)
+    credentials = flow.run_console()
+    youtube = googleapiclient.discovery.build(
+        api_service_name, api_version, credentials=credentials)
+
+    request = youtube.videos().rate(
+        id="79DijItQXMM",
+        rating="like",
+        callback="http://localhost:8000/accounts/google/login/callback/"
+    )
+
+    return request
+
+def comentar(request, video):
+    
+    os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+
+    api_service_name = "youtube"
+    api_version = "v3"
+    DEVELOPER_KEY = settings.API_KEY_YOUTUBE
+
+    youtube = googleapiclient.discovery.build(
+        api_service_name, api_version, developerKey = DEVELOPER_KEY)
+
+    request = youtube.commentThreads().list(
+        part="snippet,replies",
+        videoId=video
+    )
+    response = request.execute()
+
+    template = "index/pasos.html"
+    context = {
+        'via': via,
+        'video':video,
+    }
+    return render (request, template, context)

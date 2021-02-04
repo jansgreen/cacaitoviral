@@ -45,11 +45,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     # mis aplicaciones
     'vias',
     'perfiles.apps.PerfilesConfig',
     'embed_video',
-
 
     # librerias externas 
     'crispy_forms',
