@@ -21,7 +21,6 @@ from django.db.models import Q
 #from google_auth_oauthlib.flow import Flow
 from google_auth_oauthlib.flow import InstalledAppFlow
 
-
 #YOUTUBE SCOPLES
 scopes = ["https://www.googleapis.com/auth/youtube",
           "https://www.googleapis.com/auth/youtube.force-ssl",
@@ -216,6 +215,7 @@ def get_authenticated_service():
     return build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, http=credentials.authorize(httplib2.Http()))
 
 def Youtube_like(request, video):
+
     # Disable OAuthlib's HTTPS verification when running locally.
     # *DO NOT* leave this option enabled in production.
     os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
@@ -226,7 +226,7 @@ def Youtube_like(request, video):
 
     # Get credentials and create an API client
     flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
-        client_secrets_file, scopes)
+        client_secrets_file, scopes, key=settings.API_KEY_YOUTUBE)
     credentials = flow.run_console()
     youtube = googleapiclient.discovery.build(
         api_service_name, api_version, credentials=credentials)
