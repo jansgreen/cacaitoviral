@@ -45,7 +45,11 @@
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}
-  
+  <div class="row">
+    <p>A darle cli en Registrarse indica que ha leido detalladamente las 
+      <a href="{% url 'politica' %}">Politicas de este sitio web</a> 
+     </p>
+  </div>
   <button class="btn bg-primary text-white" type="submit">{% trans "Registrate" %} &raquo;</button>
 </form>
 

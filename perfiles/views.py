@@ -39,3 +39,6 @@ def iniciar(request):
         'aside_Rigth':aside_Rigth,
     }
     return render(request, 'account/login.html', context)
+
+def politica(request):
+    return render(request, "politica.html")
