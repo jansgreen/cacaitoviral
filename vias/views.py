@@ -1,6 +1,7 @@
 import requests
 # YOUTUBE API IMPORT
 import os
+import sys
 import google_auth_oauthlib.flow
 import googleapiclient.discovery
 import googleapiclient.errors
@@ -20,6 +21,13 @@ from django.db.models import Q
 # YOUTUBE API
 #from google_auth_oauthlib.flow import Flow
 from google_auth_oauthlib.flow import InstalledAppFlow
+
+#================================#
+from apiclient.discovery import build
+from apiclient.errors import HttpError
+from oauth2client.client import flow_from_clientsecrets
+from oauth2client.file import Storage
+from oauth2client.tools import argparser, run_flow
 
 #YOUTUBE SCOPLES
 scopes = ["https://www.googleapis.com/auth/youtube",
@@ -176,7 +184,6 @@ def Crear_via(request):
  
 def pasos(request, Id_Video, **args):
     via = AccionesYutube.objects.filter(Q(Id_Video__icontains = Id_Video))
-#    like_video()
     template = "index/pasos.html"
     context = {
         'via': via,
@@ -223,19 +230,34 @@ def Youtube_like(request, video):
     api_service_name = "youtube"
     api_version = "v3"
     client_secrets_file = "client_secret.json"
+    #===========================================================#
+    MISSING_CLIENT_SECRETS_MESSAGE = """
+    WARNING: Please configure OAuth 2.0
+
+    To make this sample run you will need to populate the client_secrets.json file
+    found at:
+
+    %s
+
+    with information from the API Console
+    https://console.developers.google.com/
+
+    For more information about the client_secrets.json file format, please visit:
+    https://developers.google.com/api-client-library/python/guide/aaa_client_secrets
+    """ % os.path.abspath(os.path.join(os.path.dirname(__file__), CLIENT_SECRETS_FILE))
 
     # Get credentials and create an API client
-    flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
-        client_secrets_file, scopes, key=settings.API_KEY_YOUTUBE)
-    credentials = flow.run_console()
-    youtube = googleapiclient.discovery.build(
-        api_service_name, api_version, credentials=credentials)
-
+    flow = flow_from_clientsecrets(CLIENT_SECRETS_FILE,
+        scope=YOUTUBE_READ_WRITE_SCOPE,
+        message=MISSING_CLIENT_SECRETS_MESSAGE)
+    storage = Storage("%s-oauth2.json" % sys.argv[0])
+    print(storage)
+    credentials = run_flow(flow, storage)
     request = youtube.videos().rate(
         id="79DijItQXMM",
         rating="like",
         callback="http://localhost:8000/accounts/google/login/callback/"
-    )
+        )
 
     return request
 

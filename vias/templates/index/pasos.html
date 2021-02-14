@@ -5,9 +5,10 @@
 
 {% if via %}
 {% for vias in via %}
-<div class="progress">
-  <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 50%" aria-valuenow="10"
-    aria-valuemin="0" aria-valuemax="{{vias.segundos}}"></div>
+<div class="progress" id="progress-id">
+  <input type="hidden" value="{{vias.segundos}}" id="Tiempo">
+ <!--  <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 50%" aria-valuenow="10"
+    aria-valuemin="0" aria-valuemax="{{vias.segundos}}"></div>-->
 </div>
 {% endfor %}
 {% endif %}
@@ -34,11 +35,7 @@
     <div class="col-2">
       {% if video %}
 
-      <a href="{% url 'Youtube_like' video %}">
-        <i class="far fa-thumbs-up"></i>
-      </a>
-      <button onclick="authenticate().then(loadClient)">authorize and load</button>
-      <button onclick="execute()">execute</button>
+      <button class="far fa-thumbs-up bg-white border border-0" onclick="authenticate().then(loadClient)"></button>
       {% endif %}
 
     </div>
@@ -58,41 +55,5 @@
 {% endblock %}
 {% block extrascripts %}
 <script src="https://apis.google.com/js/api.js"></script>
-<script>
-  /**
-   * Sample JavaScript code for youtube.videos.rate
-   * See instructions for running APIs Explorer code samples locally:
-   * https://developers.google.com/explorer-help/guides/code_samples#javascript
-   */
-
-  function authenticate() {
-    return gapi.auth2.getAuthInstance()
-      .signIn({ scope: "https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube.force-ssl https://www.googleapis.com/auth/youtubepartner" })
-      .then(function () { console.log("Sign-in successful"); },
-        function (err) { console.error("Error signing in", err); });
-  }
-  function loadClient() {
-    gapi.client.setApiKey("AIzaSyDoL-_pWJuQL7D82T8kmTOO7ni5fQTETC8");
-    return gapi.client.load("https://content.googleapis.com/discovery/v1/apis/youtube/v3/rest")
-      .then(function () { console.log("GAPI client loaded for API"); },
-        function (err) { console.error("Error loading GAPI client for API", err); });
-  }
-  // Make sure the client is loaded and sign-in is complete before calling this method.
-  function execute() {
-    return gapi.client.youtube.videos.rate({
-      "id": "79DijItQXMM",
-      "rating": "like",
-      "callback": "http://http://127.0.0.1:8000/accounts/google/login/callback/"
-    })
-      .then(function (response) {
-        // Handle the results here (response.result has the parsed body).
-        console.log("Response", response);
-      },
-        function (err) { console.error("Execute error", err); });
-  }
-  gapi.load("client:auth2", function () {
-    gapi.auth2.init({ client_id: "658919410948-1ft0h1ujbpim40vsaj68fkifm1cs44s1.apps.googleusercontent.com" });
-  });
-</script>
 
 {% endblock %}
