@@ -34,6 +34,51 @@ gapi.load("client:auth2", function () {
   gapi.auth2.init({ client_id: "658919410948-1ft0h1ujbpim40vsaj68fkifm1cs44s1.apps.googleusercontent.com" });
 });
 
+function Suscriptcion() {
+  return gapi.client.youtube.subscriptions.insert({
+    "resource": {
+      "id": ""
+    }
+  })
+      .then(function(response) {
+              // Handle the results here (response.result has the parsed body).
+              console.log("Response", response);
+            },
+            function(err) { console.error("Execute error", err); });
+}
+gapi.load("client:auth2", function() {
+  gapi.auth2.init({client_id: "YOUR_CLIENT_ID"});
+});
+
+
+/*SUSCRIPCIONES */
+function addSubscription() {
+  // Replace this channel ID with the channel ID you want to subscribe to
+  Canal = document.getElementById("Id_Canal");
+
+  var channelId = Canal;
+  var resource = {
+    snippet: {
+      resourceId: {
+        kind: 'youtube#channel',
+        channelId: channelId
+      }
+    }
+  };
+
+  try {
+    var response = YouTube.Subscriptions.insert(resource, 'snippet');
+    Logger.log(response);
+  } catch (e) {
+    if(e.message.match('subscriptionDuplicate')) {
+      Logger.log('Cannot subscribe; already subscribed to channel: ' + channelId);
+    } else {
+      Logger.log('Error adding subscription: ' + e.message);
+    }
+  }
+}
+
+
 /* BARRA DE PROGRESO*/
 
 $(document).ready(function () {

@@ -9,6 +9,7 @@ class AccionesYutubeAdmin(admin.ModelAdmin):
     fields = (
         'user',
         'Id_Video',
+        'Id_Canal',
         'thumbnails',
         'Titulo',
         'segundos',
@@ -22,6 +23,7 @@ class AccionesYutubeAdmin(admin.ModelAdmin):
         'pk',
         'user',
         'Id_Video',
+        'Id_Canal',
         'thumbnails',
         'Titulo',
         'segundos',

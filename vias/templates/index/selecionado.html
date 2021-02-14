@@ -26,7 +26,12 @@
         <div class="col-sm-12 col-md-6">
             <div class="card" style="width: 100%;">
                 <div class="card-header">
-                    Video ID: {{video.Id_Video}}
+                    <div class="row">
+                        <h5 class="text-primary">Canal ID: {{video.Id_Canal}}</h5> 
+                    </div>
+                    <div class="row">
+                   <h6 class="text-danger">Video ID: {{video.Id_Video}}</h6>           
+                    </div>
                 </div>
                 <img src="{{video.thumbnails}}" class="card-img-top" alt="...">
                 <div class="card-body">
@@ -41,13 +46,13 @@
         <div class="col-sm-12 col-md-6">
             <form action="{% url 'Crear_via' %}" method="POST">
                 {% csrf_token %}
-
+                <input type="hidden" value="{{video.Id_Canal}}" name="Id_Canal" placeholder="{{video.Id_Canal}}">
                 <input type="hidden" value="{{video.Id_Video}}" name="Id_Video" placeholder="{{video.Id_Video}}">
                 <input type="hidden" value="{{video.Titulo}}" name="Titulo" placeholder="{{video.Titulo}}">
                 <input type="hidden" value="{{user.id}}" name="user" placeholder="{{user.id}}">
                 <input type="hidden" value="{{video.thumbnails}}" name="thumbnails" placeholder="{{video.thumbnails}}">
 
-                
+
 
                 <label class="form-label">Comentar</label>
                 {{form.comentar |as_crispy_field}}
@@ -60,11 +65,11 @@
                     <span class="input-group-text">Visualizacion</span>
                     {{form.segundos |as_crispy_field}}
                     <span class="input-group-text">segundos</span>
-                  </div>
+                </div>
                 <div class="input-group mb-3 mt-3">
                     <span class="input-group-text">Repetir Vizualizacion</span>
                     {{form.repetir |as_crispy_field}}
-                  </div>
+                </div>
 
 
                 <label class="form-label">Me Gusta</label>

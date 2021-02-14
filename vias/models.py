@@ -14,7 +14,7 @@ class AccionesYutube(models.Model):
     """
     class Meta:
         verbose_name_plural = 'AccionesYutube'
-
+    Id_Canal = models.CharField(max_length=355, null=True, editable=True)
     Id_Video = models.CharField(max_length=355, null=True, editable=True)
     thumbnails =  models.URLField(max_length=200, default=True)
     Titulo = models.CharField(max_length=355, null=True, editable=True)
