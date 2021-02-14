@@ -18,7 +18,7 @@ function loadClient() {
       function (err) { console.error("Error loading GAPI client for API", err); });
 }
 // Make sure the client is loaded and sign-in is complete before calling this method.
-function execute() {
+function Alike() {
   return gapi.client.youtube.videos.rate({
     "id": "79DijItQXMM",
     "rating": "like",
