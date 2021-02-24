@@ -255,7 +255,7 @@ def Youtube_like(request, video):
     request = youtube.videos().rate(
         id=video,
         rating="like",
-        callback="http://localhost:8000/accounts/google/login/callback/"
+        callback="http://cacaitoviral.herokuapp.com/accounts/google/login/callback/"
         )
 
     return request
