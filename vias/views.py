@@ -251,10 +251,9 @@ def Youtube_like(request, video):
         scope=YOUTUBE_READ_WRITE_SCOPE,
         message=MISSING_CLIENT_SECRETS_MESSAGE)
     storage = Storage("%s-oauth2.json" % sys.argv[0])
-    print(storage)
     credentials = run_flow(flow, storage)
     request = youtube.videos().rate(
-        id="79DijItQXMM",
+        id=video,
         rating="like",
         callback="http://localhost:8000/accounts/google/login/callback/"
         )
