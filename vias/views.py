@@ -29,6 +29,8 @@ from oauth2client.client import flow_from_clientsecrets
 from oauth2client.file import Storage
 from oauth2client.tools import argparser, run_flow
 
+#=========================================#
+
 #YOUTUBE SCOPLES
 scopes = ["https://www.googleapis.com/auth/youtube",
           "https://www.googleapis.com/auth/youtube.force-ssl",
@@ -223,6 +225,7 @@ def get_authenticated_service():
 
 def Youtube_like(request, video):
 
+
     # Disable OAuthlib's HTTPS verification when running locally.
     # *DO NOT* leave this option enabled in production.
     os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
@@ -246,40 +249,49 @@ def Youtube_like(request, video):
     https://developers.google.com/api-client-library/python/guide/aaa_client_secrets
     """ % os.path.abspath(os.path.join(os.path.dirname(__file__), CLIENT_SECRETS_FILE))
 
-    # Get credentials and create an API client
-    flow = flow_from_clientsecrets(CLIENT_SECRETS_FILE,
-        scope=YOUTUBE_READ_WRITE_SCOPE,
-        message=MISSING_CLIENT_SECRETS_MESSAGE)
-    storage = Storage("%s-oauth2.json" % sys.argv[0])
-    credentials = run_flow(flow, storage)
-    request = youtube.videos().rate(
-        id=video,
-        rating="like",
-        callback="http://cacaitoviral.herokuapp.com/accounts/google/login/callback/"
-        )
-
-    return request
-
-def comentar(request, video):
-    
+    # Disable OAuthlib's HTTPS verification when running locally.
+    # *DO NOT* leave this option enabled in production.
     os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
     api_service_name = "youtube"
     api_version = "v3"
-    DEVELOPER_KEY = settings.API_KEY_YOUTUBE
+    client_secrets_file = "client_secret.json"
 
-    youtube = googleapiclient.discovery.build(
-        api_service_name, api_version, developerKey = DEVELOPER_KEY)
+    # Get credentials and create an API client
+    flow = flow_from_clientsecrets(CLIENT_SECRETS_FILE,
+        scope=YOUTUBE_READ_WRITE_SCOPE,
+        message=MISSING_CLIENT_SECRETS_MESSAGE)
 
-    request = youtube.commentThreads().list(
-        part="snippet,replies",
-        videoId=video
-    )
-    response = request.execute()
+    storage = Storage("%s-oauth2.json" % sys.argv[0])
+    credentials = storage.get()
 
-    template = "index/pasos.html"
-    context = {
-        'via': via,
-        'video':video,
-    }
-    return render (request, template, context)
+    if credentials is None or credentials.invalid:
+        credentials = run_flow(flow, storage)
+
+    return build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
+        http=credentials.authorize(httplib2.Http()))
+
+
+    flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(client_secrets_file, scopes)
+    credentials = flow.run_console()
+    youtube = googleapiclient.discovery.build(api_service_name, api_version, credentials=credentials)
+    video_rate = youtube.videos().rate(
+        id=video,
+        rating="like"
+    ).execute()
+
+    if video_rate:
+        argparser.add_argument("--videoid", default="L-oNKK1CrnU",
+            help="ID of video to like.")
+        args = argparser.parse_args()
+
+        youtube = get_authenticated_service(args)
+        try:
+            like_video(youtube, args.videoid)
+        except e:
+            print ("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
+        else:
+            print ("%s has been liked." % args.videoid)
+
+
+    return redirect()
