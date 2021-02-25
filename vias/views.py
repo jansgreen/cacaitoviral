@@ -13,6 +13,7 @@ from django.conf import settings
 from django.shortcuts import render, get_object_or_404, reverse, redirect
 from .forms import YoutubeForms
 from .models import AccionesYutube
+from .quickstart import main
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -32,14 +33,21 @@ from oauth2client.tools import argparser, run_flow
 #=========================================#
 
 #YOUTUBE SCOPLES
-scopes = ["https://www.googleapis.com/auth/youtube",
-          "https://www.googleapis.com/auth/youtube.force-ssl",
-          "https://www.googleapis.com/auth/youtubepartner"]
-
 
 YOUTUBE_READ_WRITE_SCOPE = "https://www.googleapis.com/auth/youtube"
 YOUTUBE_API_SERVICE_NAME = "youtube"
 YOUTUBE_API_VERSION = "v3"
+
+# Disable OAuthlib's HTTPS verification when running locally.
+os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+
+CLIENT_SECRETS_FILE = "client_secrets_file.json"
+
+# Get credentials and create an API client
+SCOPES = ["https://www.googleapis.com/auth/youtube",
+          "https://www.googleapis.com/auth/youtube.force-ssl",
+          "https://www.googleapis.com/auth/youtubepartner"]
+
 
 
 class UrlMain:
@@ -193,105 +201,20 @@ def pasos(request, Id_Video, **args):
     }
     return render (request, template, context)
 
-CLIENT_SECRETS_FILE = "client_secret.json"
 
-MISSING_CLIENT_SECRETS_MESSAGE = """
-WARNING: Please configure OAuth 2.0
-
-To make this sample run you will need to populate the client_secrets.json file
-found at:
-
-   %s
-
-with information from the API Console
-https://console.developers.google.com/
-
-For more information about the client_secrets.json file format, please visit:
-https://developers.google.com/api-client-library/python/guide/aaa_client_secrets
-""" 
-   
-scopes = ["https://www.googleapis.com/auth/youtube",
-            "https://www.googleapis.com/auth/youtube.force-ssl",
-            "https://www.googleapis.com/auth/youtubepartner"]
-
-def get_authenticated_service():
-#    flow = flow_from_clientsecrets(CLIENT_SECRETS_FILE, scope=YOUTUBE_READ_WRITE_SCOPE, message=MISSING_CLIENT_SECRETS_MESSAGE)
-    flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(CLIENT_SECRETS_FILE, scopes)
-    storage = None
-    credentials = run_flow(flow, storage)
-
-
-    return build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, http=credentials.authorize(httplib2.Http()))
+def get_authenticated_service(request, **args): # Modified
+    credential_path = os.path.join('./', 'credential_sample.json')
+    store = Storage(credential_path)
+    credentials = store.get()
+    if not credentials or credentials.invalid:
+        flow = flow_from_clientsecrets(CLIENT_SECRETS_FILE, SCOPES)
+        credentials = run_flow(flow, store)
+    return build(API_SERVICE_NAME, API_VERSION, credentials=credentials)
 
 def Youtube_like(request, video):
+    """Update video rating (use 'none' to unset)"""
+    main()
+    print(auth)
+    rating="like"
 
-
-    # Disable OAuthlib's HTTPS verification when running locally.
-    # *DO NOT* leave this option enabled in production.
-    os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
-
-    api_service_name = "youtube"
-    api_version = "v3"
-    client_secrets_file = "client_secret.json"
-    #===========================================================#
-    MISSING_CLIENT_SECRETS_MESSAGE = """
-    WARNING: Please configure OAuth 2.0
-
-    To make this sample run you will need to populate the client_secrets.json file
-    found at:
-
-    %s
-
-    with information from the API Console
-    https://console.developers.google.com/
-
-    For more information about the client_secrets.json file format, please visit:
-    https://developers.google.com/api-client-library/python/guide/aaa_client_secrets
-    """ % os.path.abspath(os.path.join(os.path.dirname(__file__), CLIENT_SECRETS_FILE))
-
-    # Disable OAuthlib's HTTPS verification when running locally.
-    # *DO NOT* leave this option enabled in production.
-    os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
-
-    api_service_name = "youtube"
-    api_version = "v3"
-    client_secrets_file = "client_secret.json"
-
-    # Get credentials and create an API client
-    flow = flow_from_clientsecrets(CLIENT_SECRETS_FILE,
-        scope=YOUTUBE_READ_WRITE_SCOPE,
-        message=MISSING_CLIENT_SECRETS_MESSAGE)
-
-    storage = Storage("%s-oauth2.json" % sys.argv[0])
-    credentials = storage.get()
-
-    if credentials is None or credentials.invalid:
-        credentials = run_flow(flow, storage)
-
-    return build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
-        http=credentials.authorize(httplib2.Http()))
-
-
-    flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(client_secrets_file, scopes)
-    credentials = flow.run_console()
-    youtube = googleapiclient.discovery.build(api_service_name, api_version, credentials=credentials)
-    video_rate = youtube.videos().rate(
-        id=video,
-        rating="like"
-    ).execute()
-
-    if video_rate:
-        argparser.add_argument("--videoid", default="L-oNKK1CrnU",
-            help="ID of video to like.")
-        args = argparser.parse_args()
-
-        youtube = get_authenticated_service(args)
-        try:
-            like_video(youtube, args.videoid)
-        except e:
-            print ("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
-        else:
-            print ("%s has been liked." % args.videoid)
-
-
-    return redirect()
+    return youtube.videos().rate(id=video, rating=rating).execute()

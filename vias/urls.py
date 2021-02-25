@@ -11,7 +11,7 @@ urlpatterns =[
     path('Crear_via/', views.Crear_via, name='Crear_via'),
     path('pasos/<str:Id_Video>', views.pasos, name='pasos'),
     path('Youtube_like/<str:video>', views.Youtube_like, name='Youtube_like'),
-
+    path('get_authenticated_service', views.get_authenticated_service, name='get_authenticated_service'),
 
 
     ]
