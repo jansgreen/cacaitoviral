@@ -19,6 +19,8 @@ function loadClient() {
 }
 // Make sure the client is loaded and sign-in is complete before calling this method.
 function Alike() {
+  video_ID = document.getElementById('Video_ID').value
+  console.log(video_ID)
   return gapi.client.youtube.videos.rate({
     "id": "79DijItQXMM",
     "rating": "like",

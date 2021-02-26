@@ -34,6 +34,7 @@
     {% if via_data.Me_Gusta > 0 %}
     <div class="col-2">
       {% if video %}
+      <input type="hidden" value="{{video}}" id="Video_ID" placeholder="{{video}}">
       <a href="{% url 'Youtube_like' video %}" class="btn">like</a>
       <button class="far fa-thumbs-up bg-white border border-0" onclick="authenticate().then(loadClient).then(Alike)"></button>
       {% endif %}
