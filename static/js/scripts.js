@@ -5,7 +5,6 @@ $(document).ready(function () {
 
 /* autenticar al usuario y realizar like*/
 function authenticate() {
-  console.log("ESTA FUNCIONANDO")
   return gapi.auth2.getAuthInstance()
     .signIn({ scope: "https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube.force-ssl https://www.googleapis.com/auth/youtubepartner" })
     .then(function () { console.log("Sign-in successful"); },
@@ -20,9 +19,8 @@ function loadClient() {
 // Make sure the client is loaded and sign-in is complete before calling this method.
 function Alike() {
   video_ID = document.getElementById('Video_ID').value
-  console.log(video_ID)
   return gapi.client.youtube.videos.rate({
-    "id": "79DijItQXMM",
+    "id": video_ID,
     "rating": "like",
     "callback": "http://http://127.0.0.1:8000/accounts/google/login/callback/"
   })
