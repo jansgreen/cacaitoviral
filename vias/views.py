@@ -68,17 +68,28 @@ def agregar_via(request):
     """
     esta funcion es para agregar las vias; solo puede agregar una por una
     """
-    buscar = request.GET.get("buscador")
     search_url = UrlMain.search_url
     video_url = UrlMain.video_url
     videos = []
-    params = {
-        'part': 'snippet',
-        'q' : buscar,
-        'key': settings.API_KEY_YOUTUBE,
-        'type': 'video',
-    }
     video_ids = []
+    youtube_list = AccionesYutube.objects.all()
+
+    buscar = request.GET.get("buscador")
+    if buscar:
+        params = {
+            'part': 'snippet',
+            'q' : buscar,
+            'key': settings.API_KEY_YOUTUBE,
+            'type': 'video',
+        }
+    else:
+        for Title in youtube_list:
+            params = {
+                'part': 'snippet',
+                'q' : Title,
+                'key': settings.API_KEY_YOUTUBE,
+                'type': 'video',
+            }
     r = requests.get(search_url, params=params)
     resultados = r.json()['items']
     for resultado in resultados:
