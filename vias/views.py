@@ -82,6 +82,8 @@ def agregar_via(request):
             'key': settings.API_KEY_YOUTUBE,
             'type': 'video',
         }
+        r = requests.get(search_url, params=params)
+        resultados = r.json()['items']
     else:
         for Title in youtube_list:
             params = {
@@ -90,8 +92,9 @@ def agregar_via(request):
                 'key': settings.API_KEY_YOUTUBE,
                 'type': 'video',
             }
-    r = requests.get(search_url, params=params)
-    resultados = r.json()['items']
+        r = requests.get(search_url, params=params)
+        resultados = r.json()['items']
+    print(resultados)
     for resultado in resultados:
         video_ids.append(resultado['id']['videoId'])
     
