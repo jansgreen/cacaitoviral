@@ -93,7 +93,7 @@ def agregar_via(request):
                 'type': 'video',
             }
         r = requests.get(search_url, params=params)
-        resultados = r.json()['items']
+        resultados = r.json()["items"]
     print(resultados)
     for resultado in resultados:
         video_ids.append(resultado['id']['videoId'])
