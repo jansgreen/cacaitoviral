@@ -208,7 +208,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # API_KEYS
 if 'DEVELOPMENT' in os.environ:
-    SECRET_KEY = os.environ.get('API_KEY_YOUTUBE', '')
+    API_KEY_YOUTUBE = os.environ.get('API_KEY_YOUTUBE', '')
 else:
     API_KEY_YOUTUBE = config('API_KEY_YOUTUBE')
 
