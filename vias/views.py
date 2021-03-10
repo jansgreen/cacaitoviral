@@ -77,61 +77,45 @@ def agregar_via(request):
 
     buscar = request.GET.get("buscador")
     if buscar:
-        requests = YTB.channels().list(part='statistics', forUsername=buscar)
+        params = {
+            'part': 'snippet',
+            'q' : buscar,
+            'key': settings.API_KEY_YOUTUBE,
+            'type': 'video',
+        }
+        r = requests.get(search_url, params=params)
+        resultados = r.json()
+        for resultado in resultados['items']:
+            video_ids.append(resultado['id']['videoId'])
+        video_params = {
+            'key' : settings.API_KEY_YOUTUBE,
+            'part': 'snippet,contentDetails',
+            'id': ','.join(video_ids)
+        }
     else:
-        requests = YTB.channels().list(part='statistics', forUsername='jansgreen')
-    response = requests.execute()
-    if response:
-        print(response['items'])
-        template = 'index/buscador.html'
-        context = {   'response': response,  }
-        return render(request, template, context)
+        for Vias_video_id in youtube_list:
+            video_ids.append(Vias_video_id)
+        video_params = {
+            'key' : settings.API_KEY_YOUTUBE,
+            'part': 'snippet,contentDetails',
+            'id': video_ids
+        }
+    
+    v = requests.get(video_url, params=video_params)
+    video_resultados = v.json()['items']
+    for video in video_resultados:
+        datos_videos ={
+            'Id_Canal': video['snippet']['channelId'],
+            'Titulo': video['snippet']['title'],
+            'Id_Video': video['id'],
+            'Duracion': parse_duration(video['contentDetails']['duration']).total_seconds(),
+            'thumbnails': video['snippet']['thumbnails']['high']['url'],
+        }
 
-#    if buscar:
-#        params = {
-#            'part': 'snippet',
-#            'q' : buscar,
-#            'key': settings.API_KEY_YOUTUBE,
-#            'type': 'video',
-#        }
-#        r = requests.get(search_url, params=params)
-#        resultados = r.json()['items']
-#    else:
-#        for Title in youtube_list:
-#            params = {
-#                'part': 'snippet',
-#                'q' : Title,
-#                'key': settings.API_KEY_YOUTUBE,
-#                'type': 'video',
-#            }
-#        r = requests.get(search_url, params=params)
-#        resultados = r.json()["items"]
-#    print(resultados)
-#    for resultado in resultados:
-#        video_ids.append(resultado['id']['videoId'])
-#    
-#    video_params = {
-#        'key' : settings.API_KEY_YOUTUBE,
-#        'part': 'snippet,contentDetails',
-#        'id': ','.join(video_ids)
-#    }
-
-#    v = requests.get(video_url, params=video_params)
-#    video_resultados = v.json()['items']
-#    for video in video_resultados:
-#        datos_videos ={
-#            'Id_Canal': video['snippet']['channelId'],
-#            'Titulo': video['snippet']['title'],
-#            'Id_Video': video['id'],
-#            'Duracion': parse_duration(video['contentDetails']['duration']).total_seconds(),
-#            'thumbnails': video['snippet']['thumbnails']['high']['url'],
-#        }
-
-#        videos.append(datos_videos)
-
+        videos.append(datos_videos)
     template = 'index/buscador.html'
     context = {
-        'videos': 'videos',
+        'videos': videos,
         }
     return render(request, template, context)
 

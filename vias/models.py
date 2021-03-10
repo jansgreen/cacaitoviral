@@ -28,5 +28,5 @@ class AccionesYutube(models.Model):
 
     
     def __str__(self):
-        return str(self.Titulo)
+        return str(self.Id_Video)
 
