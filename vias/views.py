@@ -82,7 +82,7 @@ def agregar_via(request):
         requests = YTB.channels().list(part='statistics', forUsername='jansgreen')
     response = requests.execute()
     if response:
-        print(response)
+        print(response['items'])
         template = 'index/buscador.html'
         context = {   'response': response,  }
         return render(request, template, context)
