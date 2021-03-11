@@ -5,6 +5,8 @@ import sys
 import google_auth_oauthlib.flow
 import googleapiclient.discovery
 import googleapiclient.errors
+from oauth2client import tools # Added
+
 
 
 from  isodate import parse_duration
@@ -54,7 +56,22 @@ SCOPES = ["https://www.googleapis.com/auth/youtube",
 class UrlMain:
     search_url = 'https://www.googleapis.com/youtube/v3/search'
     video_url = 'https://www.googleapis.com/youtube/v3/videos'
+    get_rating = 'https://www.googleapis.com/youtube/v3/videos/getRating'
+    Auth_permiso = 'https://accounts.google.com/o/oauth2/auth?'
 
+class Auth:
+    def Auths():
+        Auth_Url = UrlMain.Auth_permiso
+        Auth_params = {
+        'client_id' : settings.YOUTUBE_CLIENT_ID,
+        'redirect_uri': 'http://127.0.0.1:8000/accounts/google/login/callback/',
+        'SCOPES':SCOPES,
+        'response_type': 'code&',
+        'access_type': 'offline',
+    }
+    
+        v = requests.get(Auth_Url, params=Auth_params)
+        print(v)
 
 # Create your views here.
 def index(request):
@@ -203,7 +220,32 @@ def Crear_via(request):
             
  
 def pasos(request, Id_Video, **args):
+    auth_access = UrlMain.Auth_permiso
     via = AccionesYutube.objects.filter(Q(Id_Video__icontains = Id_Video))
+    get_rating_var = UrlMain.get_rating
+    params = {
+        'id': Id_Video,
+        }
+    Auth_params = {
+        'client_id' : settings.YOUTUBE_CLIENT_ID,
+        'redirect_uri': 'http://127.0.0.1:8000/accounts/google/login/callback/',
+        'SCOPES':SCOPES,
+        'response_type': 'code&',
+        'access_type': 'offline',
+    }
+    v = requests.get(get_rating_var, params=params)
+    #================================Credentials=====================================
+    flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRETS_FILE, scopes=SCOPES)
+    flow.run_local_server(port=8080, prompt="consent")
+    credentials = flow.credentials
+    print(credentials.json())
+    A = requests.post(auth_access, params=Auth_params)
+    raiting_boolean = v.json()
+    test = get_authenticated_service
+    print("============= CALIFICACION DEL VIDEO ===========================")
+    test
+    print("========================================")
+    
     template = "index/pasos.html"
     context = {
         'via': via,
@@ -212,19 +254,18 @@ def pasos(request, Id_Video, **args):
     return render (request, template, context)
 
 
-def get_authenticated_service(request, **args): # Modified
-    credential_path = os.path.join('./', 'credential_sample.json')
-    store = Storage(credential_path)
-    credentials = store.get()
-    if not credentials or credentials.invalid:
-        flow = flow_from_clientsecrets(CLIENT_SECRETS_FILE, SCOPES)
-        credentials = run_flow(flow, store)
-    return build(API_SERVICE_NAME, API_VERSION, credentials=credentials)
+def get_authenticated_service(): # Modified
+    print('Funcion de Auth')
+    credential_path = os.path.join('./', 'client_secrets_file.json')
+    flow = InstalledAppFlow.from_clients_secrets_file(credential_path, SCOPES)
+    print(flow)
+    credentials = flow.run_local_server(port=8080)#run_flow(flow, store)
+    print('Not Credentials')
+    print('Funcion de Auth 2')
+    return build(API_SERVICE_NAME, YOUTUBE_API_VERSION, credentials=credentials)
 
 def Youtube_like(request, video):
     """Update video rating (use 'none' to unset)"""
-    main()
-    print(auth)
-    rating="like"
+
 
     return youtube.videos().rate(id=video, rating=rating).execute()

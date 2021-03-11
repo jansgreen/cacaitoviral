@@ -35,6 +35,7 @@
     <div class="col-2">
       {% if video %}
       <input type="hidden" value="{{video}}" id="Video_ID" placeholder="{{video}}">
+      <a href="{url 'get_authenticated_service'}">test</a>
       <button id="btn_like" class="far fa-thumbs-up bg-white border border-0" onclick="btn_like_efect().then(authenticate).then(loadClient).then(Alike)"></button>
       {% endif %}
 
