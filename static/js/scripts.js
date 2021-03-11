@@ -1,4 +1,11 @@
 
+function btn_like_efect() {
+  $(document).ready(function () {
+    $('#btn_like').hide(2000);
+  });
+}
+
+
 $(document).ready(function () {
   $(".toast").toast("show");
 });
