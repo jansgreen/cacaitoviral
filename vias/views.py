@@ -219,7 +219,7 @@ def Crear_via(request):
 
             
  
-def pasos(request, Id_Video, **args):
+def pasos(request, Id_Video, **kwargs):
     auth_access = UrlMain.Auth_permiso
     via = AccionesYutube.objects.filter(Q(Id_Video__icontains = Id_Video))
     get_rating_var = UrlMain.get_rating
@@ -236,7 +236,8 @@ def pasos(request, Id_Video, **args):
     v = requests.get(get_rating_var, params=params)
     #================================Credentials=====================================
     flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRETS_FILE, scopes=SCOPES)
-    flow.run_local_server(port=8080, prompt="consent")
+    flow.run_local_server(host='127.0.0.1', port=8080, prompt="consent", authorization_prompt_message='Please visit this URL: {url}', success_message='The auth flow is complete; you may close this window.',
+    open_browser=True)
     credentials = flow.credentials
     print(credentials.json())
     A = requests.post(auth_access, params=Auth_params)
